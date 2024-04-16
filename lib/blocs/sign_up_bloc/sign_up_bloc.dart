@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,10 +12,11 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   // define an object from UserRepository that hold the logic of signUp
   final UserRepository _userRepository;
 
-  SignUpBloc({
-    // when bloc on create take an object from UserRepository
-    required UserRepository userRepository
-  }) : _userRepository = userRepository,
+  SignUpBloc(
+      {
+      // when bloc on create take an object from UserRepository
+      required UserRepository userRepository})
+      : _userRepository = userRepository,
         super(SignUpInitial()) {
     // case we read the the event SignUpRequired from UI
     on<SignUpRequired>((event, emit) async {
@@ -44,15 +44,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       }
     });
 
-    on<SendVerificationLink>((event , email) async {
-      try{
+    on<SendVerificationLink>((event, email) async {
+      try {
         await _userRepository.sendVerification();
         emit(SendVerificationSuccess());
-      }on FirebaseAuthException catch(e){
+      } on FirebaseAuthException catch (e) {
         log(e.toString());
         emit(SendVerificationFailure(message: e.code));
       }
     });
-
   }
 }
