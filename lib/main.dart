@@ -29,10 +29,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return  RepositoryProvider<AuthenticationBloc>(
+    return RepositoryProvider<AuthenticationBloc>(
       create: (context) => AuthenticationBloc(userRepository: userRepository),
-      child:AppView(),
+      child: AppView(),
     );
   }
 }
 
+// ahaaaaaa
