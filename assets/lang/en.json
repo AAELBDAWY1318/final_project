@@ -1,0 +1,26 @@
+{
+  "Hello" : "Hello",
+  "Login" : "Login",
+  "Enter Your Email" : "Enter Your Email",
+  "Enter Your Password" : "Enter Your Password",
+  "Forget Password ?" : "Forget Password ?",
+  "Do You Have An Account ?" : "Do You Have An Account ?",
+  "Don't Have An Account ?" : "Don't Have An Account ?",
+  "Create A New Account" : "Create A New Account",
+  "Login As Admin" : "Login As Admin",
+  "continue As Visitor": "continue As Visitor",
+  "Name" : "Name",
+  "Continue": "Continue",
+  "SignUp" : "SignUp",
+  "This field must be assigned" : "This field must be assigned",
+  "You must assign a valid email" : "You must assign a valid email",
+  "The email must be more than or equal to 8 chars" : "The email must be more than or equal to 8 chars",
+  "Donate" : "Donate",
+  "email-already-in-use" : "email-already-in-use",
+  "Sign Up Error" : "Sign Up Error",
+  "OK":  "OK",
+  "Verification send" : "We send a verification link to your email, please check it",
+  "Sign In Error" : "Sign In Error",
+  "Verification" : "Verification"
+
+}
