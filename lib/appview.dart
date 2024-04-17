@@ -1,5 +1,4 @@
 import 'package:charity/blocs/authentication_bloc/authentication_bloc.dart';
-import 'package:charity/screens/home_screen/home_screen.dart';
 import 'package:charity/screens/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,12 +14,12 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: BlocBuilder<AuthenticationBloc , AuthenticationState>(
-        builder: (context , state){
-          if(state.status == AuthenticationStatus.authenticated){
-            return AppLayout();
-          }else{
-            return LoginScreen();
+      home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+        builder: (context, state) {
+          if (state.status == AuthenticationStatus.authenticated) {
+            return const AppLayout();
+          } else {
+            return const LoginScreen();
           }
         },
       ),
