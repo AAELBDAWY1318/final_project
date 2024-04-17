@@ -1,14 +1,13 @@
-import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/size.dart';
 import 'package:flutter/material.dart';
 
 class CaseComponent extends StatelessWidget {
   final String title;
   final String description;
-  final double indicatorValue ;
-  final String image ;
-  final String text ;
-  final double get , all;
+  final double indicatorValue;
+  final String image;
+  final String text;
+  final double get, all;
   final Function() onTap; // for component
   final Function() onPress; // for button
   const CaseComponent({
@@ -27,7 +26,7 @@ class CaseComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig sizeConfig = SizeConfig()..init(context);
-    return GestureDetector (
+    return GestureDetector(
       onTap: onTap,
       child: Container(
         //width: ,
@@ -62,7 +61,8 @@ class CaseComponent extends StatelessWidget {
                     maxLines: 1, // Limit to 1 line
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4), // Add space between title and description
+                  const SizedBox(
+                      height: 4), // Add space between title and description
                   Text(
                     description,
                     maxLines: 1, // Limit to 1 line
@@ -73,21 +73,22 @@ class CaseComponent extends StatelessWidget {
                     value: indicatorValue,
                     color: const Color(0xFF2352A1),
                   ),
-                  const SizedBox(height: 4), // Add space between title and description
+                  const SizedBox(
+                      height: 4), // Add space between title and description
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children:
-                    [
+                    children: [
                       Text(
                         '$get / $all ',
                       ),
                       ElevatedButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(const Color(0xFF2352A1)),
+                          backgroundColor: MaterialStateProperty.all(
+                              const Color(0xFF2352A1)),
                         ),
                         onPressed: onPress,
                         child: Text(
-                         text,
+                          text,
                           style: const TextStyle(
                             color: Colors.white,
                           ),
