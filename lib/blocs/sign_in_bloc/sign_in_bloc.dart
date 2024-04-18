@@ -27,5 +27,17 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     on<SignOutRequired>((event, emit) async {
       await _userRepository.logOut();
     });
+    on<SendResetPassword>((event, emit) async {
+      try{
+        await _userRepository.resetPassword(event.email);
+        emit(SendResetPasswordSuccess());
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          emit(const SendResetPasswordFailure(message: 'user-not-found'));
+        }else {
+          emit(const SendResetPasswordFailure(message: "unknown"));
+        }
+      }
+    });
   }
 }

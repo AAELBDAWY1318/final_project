@@ -3,6 +3,7 @@ import 'package:charity/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:charity/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:charity/constant/my_colors.dart';
 import 'package:charity/screens/home_screen/home_screen.dart';
+import 'package:charity/screens/reset_password_screen/reset_password_screen.dart';
 import 'package:charity/screens/sign_up/sign_up.dart';
 import 'package:charity/widgets/default_material_button.dart';
 import 'package:charity/widgets/default_text_button.dart';
@@ -73,20 +74,43 @@ class LoginScreen extends StatelessWidget {
                       controller: emailController,
                       icon: Icons.alternate_email,
                       label: getLang(context, "Enter Your Email")!,
-                      validator: (val) {},
+                      validator: (val) {
+                        // Regular expression for email validation
+                        final RegExp emailRegex =
+                        RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                        if (val!.isEmpty) {
+                          return getLang(context, "This field must be assigned");
+                        } else if (!emailRegex.hasMatch(val)) {
+                          return getLang(context, "You must assign a valid email");
+                        }
+                        return null;
+                      },
                     ),
                     const SizedBox(height: 10.0,),
                     DefaultTextFormField(
                       controller: passwordController,
                       icon: Icons.lock,
                       label: getLang(context, "Enter Your Password")!,
-                      validator: (val) {},
+                      validator: (val) {
+                        if (val!.isEmpty) {
+                          return getLang(context, "This field must be assigned");
+                        } else if (val!.length < 8) {
+                          return getLang(context,
+                              "The email must be more than or equal to 8 chars");
+                        }
+                        return null;
+                      },
                       secure: true,
                     ),
                     const SizedBox(height: 10.0,),
                     DefaultTextButton(
                       text: getLang(context, "Forget Password ?")!,
-                      function: () {},
+                      function: () {
+                        Navigator.push(
+                          context ,
+                          MaterialPageRoute(builder: (context)=>ResetPasswordScreen()),
+                        );
+                      },
                     ),
                     const SizedBox(height: 10.0,),
                     DefaultMaterialButton(

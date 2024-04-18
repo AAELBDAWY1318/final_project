@@ -16,3 +16,9 @@ class SignInFailure extends SignInState {
 
   const SignInFailure({this.message});
 }
+
+class SendResetPasswordSuccess extends SignInState {}
+class SendResetPasswordFailure extends SignInState {
+  final String? message;
+  const SendResetPasswordFailure({this.message});
+}

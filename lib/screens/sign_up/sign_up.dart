@@ -140,6 +140,7 @@ class SignUpScreen extends StatelessWidget {
                           return getLang(context,
                               "The email must be more than or equal to 8 chars");
                         }
+                        return null;
                       },
                       secure: true,
                     ),

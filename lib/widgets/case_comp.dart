@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 class CaseComponent extends StatelessWidget {
   final String title;
   final String description;
-  final double indicatorValue ;
-  final String image ;
-  final String text ;
-  final double get , all;
+  final double indicatorValue;
+  final String image;
+  final String text;
+  final double get, all;
   final Function() onTap; // for component
   final Function() onPress; // for button
   const CaseComponent({
@@ -27,10 +27,10 @@ class CaseComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig sizeConfig = SizeConfig()..init(context);
-    return GestureDetector (
+    return GestureDetector(
       onTap: onTap,
       child: Container(
-        //width: ,
+        width: sizeConfig.screenWidth! * 0.75,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(22.0),
@@ -38,6 +38,7 @@ class CaseComponent extends StatelessWidget {
             color: Colors.black, // Stroke color
             width: 2, // Stroke width
           ),
+          color: Colors.white,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +47,7 @@ class CaseComponent extends StatelessWidget {
               image,
               fit: BoxFit.cover,
               width: double.infinity,
-              //height: ,
+              height: sizeConfig.screenHeight! * 0.13,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -62,7 +63,8 @@ class CaseComponent extends StatelessWidget {
                     maxLines: 1, // Limit to 1 line
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4), // Add space between title and description
+                  const SizedBox(
+                      height: 4), // Add space between title and description
                   Text(
                     description,
                     maxLines: 1, // Limit to 1 line
@@ -73,11 +75,11 @@ class CaseComponent extends StatelessWidget {
                     value: indicatorValue,
                     color: const Color(0xFF2352A1),
                   ),
-                  const SizedBox(height: 4), // Add space between title and description
+                  const SizedBox(
+                      height: 4), // Add space between title and description
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children:
-                    [
+                    children: [
                       Text(
                         '$get / $all ',
                       ),
@@ -87,7 +89,7 @@ class CaseComponent extends StatelessWidget {
                         ),
                         onPressed: onPress,
                         child: Text(
-                         text,
+                          text,
                           style: const TextStyle(
                             color: Colors.white,
                           ),

@@ -21,6 +21,12 @@
   "OK":  "OK",
   "Verification send" : "We send a verification link to your email, please check it",
   "Sign In Error" : "Sign In Error",
-  "Verification" : "Verification"
+  "Verification" : "Verification",
+  "Reset Password" : "Reset Password",
+  "user-not-found": "user-not-found",
+  "unknown" :"unknown",
+  "error" : "error",
+  "donate" : "Donate",
+  "campaigns" : "Campaigns"
 
 }

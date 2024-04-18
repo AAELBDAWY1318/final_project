@@ -18,3 +18,10 @@ class SignOutRequired extends SignInEvent{
 
   const SignOutRequired();
 }
+
+class SendResetPassword extends SignInEvent {
+  final String email ;
+
+  const SendResetPassword({required this.email});
+
+}
