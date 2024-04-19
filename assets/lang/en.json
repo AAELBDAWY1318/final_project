@@ -27,6 +27,20 @@
   "unknown" :"unknown",
   "error" : "error",
   "donate" : "Donate",
-  "campaigns" : "Campaigns"
-
+  "campaigns" : "Campaigns",
+  "All" :"All",
+  "Poor" : "Poor",
+  "Widows" : "Widows & Orphans" ,
+  "Students" : "Students",
+  "Debtors": "Debtors",
+  "Cases" : "Cases",
+  "welcome" : "Welcome",
+  "about us" : "About Us",
+  "apply app" : "Apply help request",
+  "connect" : "Connect with Us",
+  "ask about request" : "Ask about request",
+  "my donation reports" : "My donation Reports",
+  "dashboard" : "Dashboard",
+  "change lang" : "Change Language",
+  "logout" : "Logout"
 }

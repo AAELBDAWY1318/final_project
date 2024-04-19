@@ -27,5 +27,21 @@
   "unknown" : "خطأ غير معروف",
   "error" : "خطأ",
   "donate" : "تبرع",
-  "campaigns" : "حملات انسانية"
+  "campaigns" : "حملات انسانية",
+  "All" : "الكل",
+  "Poor" : "فقراء",
+  "Widows" : "أيتام و أرامل",
+  "Students" : "طلاب",
+  "Debtors": "غارمين",
+  "Cases" : "الحالات",
+  "welcome" : "مرحبا",
+  "about us" : "من نحن",
+  "apply app" : "تقديم طلب مساعدة",
+  "connect" : "تواصل معانا",
+  "ask about request" : "استفسار عن طلب",
+  "my donation reports" : "تقارير تبرعاتي",
+  "dashboard" : "لوحة التحكم",
+  "change lang" : "تغير اللغة",
+  "logout" : "تسجيل الخروج"
+
 }
