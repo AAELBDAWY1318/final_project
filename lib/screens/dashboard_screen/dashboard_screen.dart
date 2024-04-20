@@ -1,7 +1,10 @@
 import 'package:charity/app_locale/app_locale.dart';
+import 'package:charity/screens/cases_screen/cases_screen.dart';
 import 'package:charity/widgets/dashboard_item.dart';
 import 'package:charity/widgets/second_default_text.dart';
 import 'package:flutter/material.dart';
+
+import '../../widgets/back_compoent.dart';
 
 class DashBoardScreen extends StatelessWidget {
   const DashBoardScreen({super.key});
@@ -18,7 +21,11 @@ class DashBoardScreen extends StatelessWidget {
       DashboardItem(
         text: getLang(context, 'Cases')!,
         image: 'assets/images/cases.png',
-        onTap: () {},
+        onTap: () {
+          Navigator.push(context, 
+            MaterialPageRoute(builder: (context)=> CasesScreen())
+          );
+        },
       ),
       DashboardItem(
         text: getLang(context, "complaints")!,
@@ -46,35 +53,31 @@ class DashBoardScreen extends StatelessWidget {
         onTap: () {},
       ),
     ];
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 15.0,
-              ),
-              SecondDefaultText(text: getLang(context, 'dashboard')!, ),
-              const SizedBox(
-                height: 15.0,
-              ),
-              GridView.builder(
-                physics: const NeverScrollableScrollPhysics(), // Disable scrolling
-                shrinkWrap: true, // Adjusts its size based on its children
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // Number of columns
-                  crossAxisSpacing: 10.0, // Spacing between columns
-                  mainAxisSpacing: 10.0, // Spacing between rows
-                ),
-                itemCount: itemsList.length,
-                itemBuilder: (context, index) {
-                  return itemsList[index];
-                },
-              )
-            ],
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const Back(),
+                SecondDefaultText(text: getLang(context, 'dashboard')!, ),
+                GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(), // Disable scrolling
+                  shrinkWrap: true, // Adjusts its size based on its children
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, // Number of columns
+                    crossAxisSpacing: 10.0, // Spacing between columns
+                    mainAxisSpacing: 10.0, // Spacing between rows
+                  ),
+                  itemCount: itemsList.length,
+                  itemBuilder: (context, index) {
+                    return itemsList[index];
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),

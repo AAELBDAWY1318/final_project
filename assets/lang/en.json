@@ -50,5 +50,7 @@
   "manage campaign" : "Manage campaign" ,
   "result" :"Result",
   "complaints" : "Complaints & Suggestions",
-  "complete cases" : "Complete Cases"
+  "complete cases" : "Complete Cases",
+  "search" : "Search using national ID",
+  "id length" : "The number must be 14 digits"
 }
