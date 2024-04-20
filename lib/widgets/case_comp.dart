@@ -1,5 +1,6 @@
 import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/size.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CaseComponent extends StatelessWidget {
@@ -82,6 +83,7 @@ class CaseComponent extends StatelessWidget {
                     children: [
                       Text(
                         '$get / $all ',
+                        textAlign: TextAlign.center,
                       ),
                       ElevatedButton(
                         style: ButtonStyle(

@@ -42,5 +42,13 @@
   "my donation reports" : "My donation Reports",
   "dashboard" : "Dashboard",
   "change lang" : "Change Language",
-  "logout" : "Logout"
+  "logout" : "Logout",
+  "about": "We are a charitable platform that collects donations to support the needy in various forms such as supporting the poor, orphans, widows, financially disadvantaged students, releasing debtors from prison, and other humanitarian activities. What sets us apart is complete transparency about donations and how they are used.",
+  "request": "Requests",
+  "add campaign" : "Add campaign",
+  "complete campaign" : "Complete campaign",
+  "manage campaign" : "Manage campaign" ,
+  "result" :"Result",
+  "complaints" : "Complaints & Suggestions",
+  "complete cases" : "Complete Cases"
 }

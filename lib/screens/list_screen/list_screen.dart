@@ -1,4 +1,6 @@
 import 'package:charity/app_locale/app_locale.dart';
+import 'package:charity/screens/about_us_screen/about_us_screen.dart';
+import 'package:charity/screens/dashboard_screen/dashboard_screen.dart';
 import 'package:charity/screens/login/login.dart';
 import 'package:charity/widgets/default_material_button.dart';
 import 'package:charity/widgets/list_component.dart';
@@ -37,7 +39,11 @@ class ListScreen extends StatelessWidget {
     List<ListComponent> listComponents = [
       ListComponent(
         text: getLang(context, 'about us')!,
-        onTap: () {},
+        onTap: () {
+          Navigator.push(context,
+            MaterialPageRoute(builder: (context)=>AboutUsScreen()),
+          );
+        },
       ),
       ListComponent(
         text: getLang(context, 'apply app')!,
@@ -57,7 +63,11 @@ class ListScreen extends StatelessWidget {
       ),
       ListComponent(
         text: getLang(context, 'dashboard')!,
-        onTap: () {},
+        onTap: () {
+          Navigator.push(context,
+            MaterialPageRoute(builder: (context)=>DashBoardScreen()),
+          );
+        },
       ),
       ListComponent(
         text: getLang(context, 'change lang')!,
