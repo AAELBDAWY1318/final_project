@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:charity/blocs/sign_up_bloc/sign_up_bloc.dart';
@@ -70,7 +68,7 @@ class SignUpScreen extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => LoginScreen())
+                          MaterialPageRoute(builder: (context) => const LoginScreen())
                         );
                       },
                       child: Text(getLang(context,  "OK")!),
@@ -157,6 +155,7 @@ class SignUpScreen extends StatelessWidget {
                           myUser = myUser.copyWith(
                             email: emailController.text,
                             name: nameController.text,
+                            flag: "donor",
                           );
                           context.read<SignUpBloc>().add(
                               SignUpRequired(
@@ -171,7 +170,11 @@ class SignUpScreen extends StatelessWidget {
                       height: 10.0,
                     ),
                     DefaultTextButton(
-                      function: () {},
+                      function: () {
+                        Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context)=>const LoginScreen()),
+                        );
+                      },
                       text: getLang(context, "Login")!,
                     ),
                     const SizedBox(

@@ -52,5 +52,7 @@
   "complaints" : "Complaints & Suggestions",
   "complete cases" : "Complete Cases",
   "search" : "Search using national ID",
-  "id length" : "The number must be 14 digits"
+  "id length" : "The number must be 14 digits",
+  "are U sure" : "Are you sure,you will Logout !",
+  "Successfully" : "Successfully Logout"
 }

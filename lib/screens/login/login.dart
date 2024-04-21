@@ -2,7 +2,6 @@ import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:charity/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:charity/constant/my_colors.dart';
-import 'package:charity/screens/home_screen/home_screen.dart';
 import 'package:charity/screens/reset_password_screen/reset_password_screen.dart';
 import 'package:charity/screens/sign_up/sign_up.dart';
 import 'package:charity/widgets/default_material_button.dart';
@@ -10,9 +9,7 @@ import 'package:charity/widgets/default_text_button.dart';
 import 'package:charity/widgets/default_text_form_field.dart';
 import 'package:charity/widgets/first_default_text.dart';
 import 'package:charity/widgets/upper_com.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../layout/app_layout.dart';
@@ -33,8 +30,8 @@ class LoginScreen extends StatelessWidget {
       child: BlocConsumer<SignInBloc, SignInState>(
         listener: (context, state) {
           if(state is SignInSuccess){
-            Navigator.push(context,
-              MaterialPageRoute(builder: (context)=>AppLayout()),
+            Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context)=>const AppLayout()),
             );
           }else if(state is SignInFailure){
             showDialog(
@@ -108,7 +105,7 @@ class LoginScreen extends StatelessWidget {
                       function: () {
                         Navigator.push(
                           context ,
-                          MaterialPageRoute(builder: (context)=>ResetPasswordScreen()),
+                          MaterialPageRoute(builder: (context)=>const ResetPasswordScreen()),
                         );
                       },
                     ),
@@ -133,7 +130,7 @@ class LoginScreen extends StatelessWidget {
                       function: () {
                         Navigator.push(context,
                           MaterialPageRoute(
-                              builder: (context) => SignUpScreen()),
+                              builder: (context) => const SignUpScreen()),
                         );
                       },
                       text: getLang(context, "Create A New Account")!,
@@ -152,7 +149,7 @@ class LoginScreen extends StatelessWidget {
                       buttonColor: MyColors.myWhile,
                       function: () {
                         Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => AppLayout()),
+                          MaterialPageRoute(builder: (context) => const AppLayout()),
                         );
                       },
                     ),

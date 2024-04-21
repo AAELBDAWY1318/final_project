@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:user_repository/scr/user_repos.dart';
 
+import 'entities/user_entity.dart';
 import 'models/user.dart';
 
 class FirebaseUserRepos implements UserRepository {
@@ -93,4 +94,29 @@ class FirebaseUserRepos implements UserRepository {
       log(error.toString());
     }
   }
+
+  @override
+  Future<MyUser> getMyUser(String myUserId) async {
+    try {
+      log(myUserId);
+      final docSnapshot = await usersCollection.doc(myUserId).get();
+      if (docSnapshot.exists) {
+        final userData = docSnapshot.data();
+        if (userData != null) {
+          // Safely handle null values when creating MyUserEntity
+          final myUserEntity = MyUserEntity.fromDocument(userData);
+          // Safely handle null values when creating MyUser
+          return MyUser.fromEntity(myUserEntity);
+        } else {
+          throw Exception("User data is null");
+        }
+      } else {
+        throw Exception("User document does not exist");
+      }
+    } catch (e) {
+      log('error : ${e.toString()}');
+      rethrow;
+    }
+  }
+
 }
