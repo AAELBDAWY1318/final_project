@@ -5,9 +5,11 @@ import 'package:charity/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:charity/blocs/my_user_bloc/my_user_bloc.dart';
 import 'package:charity/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:charity/screens/about_us_screen/about_us_screen.dart';
+import 'package:charity/screens/apply_request/apply_request.dart';
 import 'package:charity/screens/dashboard_screen/dashboard_screen.dart';
 import 'package:charity/screens/login/login.dart';
 import 'package:charity/screens/logout/logout.dart';
+import 'package:charity/screens/suggestion/suggestion.dart';
 import 'package:charity/widgets/default_material_button.dart';
 import 'package:charity/widgets/list_component.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -94,11 +96,21 @@ class ListScreen extends StatelessWidget {
       ),
       ListComponent(
         text: getLang(context, 'apply app')!,
-        onTap: () {},
+        onTap: () {
+          Navigator.push(context,
+            MaterialPageRoute(builder: (BuildContext context) {
+              return const ApplyRequestScreen();
+            }),
+          );
+        },
       ),
       ListComponent(
         text: getLang(context, 'connect')!,
-        onTap: () {},
+        onTap: () {
+          Navigator.push(context,
+            MaterialPageRoute(builder: (context)=> const Suggestion()),
+          );
+        },
       ),
       ListComponent(
         text: getLang(context, 'ask about request')!,
@@ -134,7 +146,6 @@ class ListScreen extends StatelessWidget {
     List<ListComponent> visitorOperationList = [
       listComponents[0],
       listComponents[1],
-      listComponents[2],
       listComponents[3],
     ];
     // this hold only donor operations

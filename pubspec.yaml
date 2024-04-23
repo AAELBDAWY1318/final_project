@@ -40,11 +40,18 @@ dependencies:
     sdk: flutter
   user_repository:
     path: packages/user_repository
+  complaint_repository:
+    path: packages/complaint_repository
+  request_repository:
+    path: packages/request_repository
   bloc: ^8.1.4
   flutter_bloc: ^8.1.4
   equatable: ^2.0.5
   firebase_auth: ^4.19.1
   cloud_firestore: ^4.16.1
+  image_picker: ^0.8.0
+  firebase_storage: ^11.7.2
+  file: ^7.0.0
 
 dev_dependencies:
   flutter_test:

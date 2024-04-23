@@ -51,6 +51,15 @@ class LoginScreen extends StatelessWidget {
                 );
               },
             );
+          }else if(state is SignInProcess){
+            showDialog(
+                context: context,
+                builder: (BuildContext context){
+                  return const AlertDialog(
+                    content: CircularProgressIndicator(),
+                  );
+                }
+            );
           }
         },
         builder: (context, state) {

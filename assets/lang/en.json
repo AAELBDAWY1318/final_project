@@ -54,5 +54,15 @@
   "search" : "Search using national ID",
   "id length" : "The number must be 14 digits",
   "are U sure" : "Are you sure,you will Logout !",
-  "Successfully" : "Successfully Logout"
+  "Successfully" : "Successfully Logout",
+  "phone" : "Enter your phone number",
+  "description" : "add description",
+  "title" : "Title",
+  "success" : "Success",
+  "failure" : "Failure",
+  "waiting" : "Waiting...",
+  "id" : "Enter your national ID",
+  "id face": "ID face image",
+  "id tail": "ID tail image",
+  "id photo": "You must upload the photo of national Id"
 }
