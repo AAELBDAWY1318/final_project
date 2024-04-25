@@ -9,6 +9,7 @@ class Request extends Equatable {
   final String phone;
   final String description;
   final String status;
+  final String flag;
 
   const Request(
       {required this.name,
@@ -17,7 +18,8 @@ class Request extends Equatable {
       required this.description,
       required this.idImage1,
       required this.idImage2,
-      required this.status});
+      required this.status,
+      required this.flag});
 
   Request edit({
     String? nationalId,
@@ -27,6 +29,7 @@ class Request extends Equatable {
     String? phone,
     String? description,
     String? status,
+    String ? flag,
   }) {
     return Request(
       phone: phone ?? this.phone,
@@ -36,6 +39,7 @@ class Request extends Equatable {
       idImage2: idImage2 ?? this.idImage2,
       description: description ?? this.description,
       status: status ?? this.status,
+      flag: flag ?? this.flag,
     );
   }
   //empty object
@@ -47,6 +51,7 @@ class Request extends Equatable {
     idImage1: '',
     nationalId: '',
     phone: '',
+    flag: '',
   );
 
   RequestEntity toEntity(){
@@ -58,10 +63,11 @@ class Request extends Equatable {
       idImage1: idImage1,
       idImage2: idImage2,
       name: name,
+      flag :flag
     );
   }
 
-  Request fromEntity(RequestEntity entity){
+  static Request fromEntity(RequestEntity entity){
     return Request(
       name:  entity.name,
       nationalId: entity.nationalId,
@@ -70,8 +76,9 @@ class Request extends Equatable {
       phone: entity.phone,
       description: entity.description,
       status: entity.status,
+      flag : entity.flag,
     );
   }
   @override
-  List<Object?> get props => [name , nationalId , idImage1 , idImage2 , phone , description , status];
+  List<Object?> get props => [name , nationalId , idImage1 , idImage2 , phone , description , status, flag];
 }

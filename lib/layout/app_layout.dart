@@ -13,7 +13,7 @@ class AppLayout extends StatefulWidget {
 }
 
 class _AppLayoutState extends State<AppLayout> {
-  List<Widget> screens = [HomeScreen(), DonateScreen(), ListScreen()];
+  List<Widget> screens = [const HomeScreen(), const DonateScreen(), const ListScreen()];
   int index = 0;
 
   @override

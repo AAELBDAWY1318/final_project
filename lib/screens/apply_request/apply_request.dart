@@ -216,6 +216,7 @@ class ApplyRequestScreen extends StatelessWidget {
                                   phone: phoneController.text,
                                   nationalId: idController.text,
                                   name: nameController.text,
+                                  flag: 'real',
                                 );
                                 context.read<RequestBloc>().add(
                                   AddRequestRequired(request: request),

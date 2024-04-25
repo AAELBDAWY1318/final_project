@@ -8,6 +8,7 @@ class RequestEntity extends Equatable {
   final String phone;
   final String description;
   final String status;
+  final String flag;
 
   const RequestEntity(
       {required this.name,
@@ -16,7 +17,8 @@ class RequestEntity extends Equatable {
       required this.description,
       required this.idImage1,
       required this.idImage2,
-      required this.status});
+      required this.status,
+      required this.flag});
 
   Map<String, Object?> toDocument() {
     return {
@@ -27,6 +29,7 @@ class RequestEntity extends Equatable {
       'phone': phone,
       'description': description,
       'status': status,
+      'flag':flag,
     };
   }
 
@@ -38,11 +41,12 @@ class RequestEntity extends Equatable {
       idImage2: doc['idImage2'] as String,
       phone: doc['phone'] as String,
       description: doc['description'] as String,
-      status: doc['description'] as String,
+      status: doc['status'] as String,
+      flag: doc['flag'] as String,
     );
   }
 
   @override
   List<Object?> get props =>
-      [name, nationalId, idImage1, idImage2, phone, description, status];
+      [name, nationalId, idImage1, idImage2, phone, description, status , flag];
 }

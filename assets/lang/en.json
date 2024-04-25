@@ -64,5 +64,16 @@
   "id" : "Enter your national ID",
   "id face": "ID face image",
   "id tail": "ID tail image",
-  "id photo": "You must upload the photo of national Id"
+  "fake": "Fake",
+  "request details": "Request Details",
+  "id photo": "You must upload the photo of national Id",
+  "national id" : "National ID",
+  "Phone": "Phone",
+  "des": "Description",
+  "add": "Add",
+  "refuse": "Refuse",
+  "inQueue": "Your request is in queue now",
+  "refused": "Your request has been refused",
+  "accepted": "Your request has been accepted",
+  "not exist": "No Request with this national ID"
 }

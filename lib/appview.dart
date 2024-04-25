@@ -1,5 +1,4 @@
 import 'package:charity/blocs/authentication_bloc/authentication_bloc.dart';
-import 'package:charity/screens/home_screen/home_screen.dart';
 import 'package:charity/screens/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,9 +17,9 @@ class AppView extends StatelessWidget {
       home: BlocBuilder<AuthenticationBloc , AuthenticationState>(
         builder: (context , state){
           if(state.status == AuthenticationStatus.authenticated){
-            return AppLayout();
+            return const AppLayout();
           }else{
-            return LoginScreen();
+            return const LoginScreen();
           }
         },
       ),
@@ -31,13 +30,13 @@ class AppView extends StatelessWidget {
         AppLocale.delegate,
       ],
       supportedLocales: const [
-        Locale('en', ''),
         Locale('ar', ''),
+        Locale('en', ''),
       ],
       localeResolutionCallback: (currentLang, supportLang) {
-        if (currentLang == null) {
+        if (currentLang != null) {
           for (Locale locale in supportLang) {
-            if (locale.languageCode == currentLang!.languageCode) {
+            if (locale.languageCode == currentLang.languageCode) {
               return currentLang;
             }
           }

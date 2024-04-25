@@ -1,4 +1,6 @@
 import 'package:charity/app_locale/app_locale.dart';
+import 'package:charity/layout/request_layout.dart';
+import 'package:charity/screens/browse_requests/browes_requests.dart';
 import 'package:charity/screens/cases_screen/cases_screen.dart';
 import 'package:charity/widgets/dashboard_item.dart';
 import 'package:charity/widgets/second_default_text.dart';
@@ -16,14 +18,21 @@ class DashBoardScreen extends StatelessWidget {
       DashboardItem(
         text: getLang(context, 'request')!,
         image: 'assets/images/request.png',
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (BuildContext context) {
+                return const RequestLayout();
+              }),
+          );
+        },
       ),
       DashboardItem(
         text: getLang(context, 'Cases')!,
         image: 'assets/images/cases.png',
         onTap: () {
           Navigator.push(context, 
-            MaterialPageRoute(builder: (context)=> CasesScreen())
+            MaterialPageRoute(builder: (context)=> const CasesScreen())
           );
         },
       ),
