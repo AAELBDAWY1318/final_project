@@ -1,3 +1,4 @@
+import 'package:case_campaign_repository/case_campaign_repository.dart';
 import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/blocs/cases_campaigns_bloc/cases_campaigns_bloc.dart';
 import 'package:charity/constant/my_colors.dart';
@@ -5,9 +6,7 @@ import 'package:charity/size.dart';
 import 'package:charity/widgets/case_comp.dart';
 import 'package:charity/widgets/category_component.dart';
 import 'package:charity/widgets/second_default_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -49,8 +48,12 @@ class HomeScreen extends StatelessWidget {
     ];
 
     return BlocProvider<CasesCampaignsBloc>(
-      create: (context) => CasesCampaignsBloc(),
-      child: BlocBuilder<CasesCampaignsBloc, CasesCampaignsState>(
+      create: (context) => CasesCampaignsBloc(
+          caseCampaignRepository: FirebaseCaseCampaignRepository()),
+      child: BlocConsumer<CasesCampaignsBloc, CasesCampaignsState>(
+        listener: (context, state) {
+          // TODO: implement listener
+        },
         builder: (context, state) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -100,12 +103,15 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         CategoryComponent(
                           text: getLang(context, "All")!,
-                          color: CasesCampaignsBloc.get(context).index ==0 ? MyColors.myBlue : MyColors.myWhile,
-                          textColor: CasesCampaignsBloc.get(context).index == 0 ? Colors.white:Colors.black,
+                          color: CasesCampaignsBloc.get(context).index == 0
+                              ? MyColors.myBlue
+                              : MyColors.myWhile,
+                          textColor: CasesCampaignsBloc.get(context).index == 0
+                              ? Colors.white
+                              : Colors.black,
                           function: () {
-                            CasesCampaignsBloc.get(context).add(
-                                const ChangeCategory(index: 0)
-                            );
+                            CasesCampaignsBloc.get(context)
+                                .add(const ChangeCategory(index: 0));
                           },
                         ),
                         const SizedBox(
@@ -113,12 +119,15 @@ class HomeScreen extends StatelessWidget {
                         ),
                         CategoryComponent(
                           text: getLang(context, "Poor")!,
-                          color: CasesCampaignsBloc.get(context).index ==1 ? MyColors.myBlue : MyColors.myWhile,
-                          textColor: CasesCampaignsBloc.get(context).index == 1 ? Colors.white:Colors.black,
+                          color: CasesCampaignsBloc.get(context).index == 1
+                              ? MyColors.myBlue
+                              : MyColors.myWhile,
+                          textColor: CasesCampaignsBloc.get(context).index == 1
+                              ? Colors.white
+                              : Colors.black,
                           function: () {
-                            CasesCampaignsBloc.get(context).add(
-                                const ChangeCategory(index: 1)
-                            );
+                            CasesCampaignsBloc.get(context)
+                                .add(const ChangeCategory(index: 1));
                           },
                         ),
                         const SizedBox(
@@ -126,12 +135,15 @@ class HomeScreen extends StatelessWidget {
                         ),
                         CategoryComponent(
                           text: getLang(context, "Widows")!,
-                          color: CasesCampaignsBloc.get(context).index ==2 ? MyColors.myBlue : MyColors.myWhile,
-                          textColor: CasesCampaignsBloc.get(context).index == 2 ? Colors.white:Colors.black,
+                          color: CasesCampaignsBloc.get(context).index == 2
+                              ? MyColors.myBlue
+                              : MyColors.myWhile,
+                          textColor: CasesCampaignsBloc.get(context).index == 2
+                              ? Colors.white
+                              : Colors.black,
                           function: () {
-                            CasesCampaignsBloc.get(context).add(
-                                const ChangeCategory(index: 2)
-                            );
+                            CasesCampaignsBloc.get(context)
+                                .add(const ChangeCategory(index: 2));
                           },
                         ),
                         const SizedBox(
@@ -139,12 +151,15 @@ class HomeScreen extends StatelessWidget {
                         ),
                         CategoryComponent(
                           text: getLang(context, "Students")!,
-                          color: CasesCampaignsBloc.get(context).index ==3 ? MyColors.myBlue : MyColors.myWhile,
-                          textColor: CasesCampaignsBloc.get(context).index == 3? Colors.white:Colors.black,
+                          color: CasesCampaignsBloc.get(context).index == 3
+                              ? MyColors.myBlue
+                              : MyColors.myWhile,
+                          textColor: CasesCampaignsBloc.get(context).index == 3
+                              ? Colors.white
+                              : Colors.black,
                           function: () {
-                            CasesCampaignsBloc.get(context).add(
-                                const ChangeCategory(index: 3)
-                            );
+                            CasesCampaignsBloc.get(context)
+                                .add(const ChangeCategory(index: 3));
                           },
                         ),
                         const SizedBox(
@@ -152,10 +167,15 @@ class HomeScreen extends StatelessWidget {
                         ),
                         CategoryComponent(
                           text: getLang(context, "Debtors")!,
-                          color: CasesCampaignsBloc.get(context).index ==4 ? MyColors.myBlue : MyColors.myWhile,
-                          textColor: CasesCampaignsBloc.get(context).index == 4 ? Colors.white:Colors.black,
+                          color: CasesCampaignsBloc.get(context).index == 4
+                              ? MyColors.myBlue
+                              : MyColors.myWhile,
+                          textColor: CasesCampaignsBloc.get(context).index == 4
+                              ? Colors.white
+                              : Colors.black,
                           function: () {
-                           CasesCampaignsBloc.get(context).add(const ChangeCategory(index: 4));
+                            CasesCampaignsBloc.get(context)
+                                .add(const ChangeCategory(index: 4));
                           },
                         ),
                         const SizedBox(

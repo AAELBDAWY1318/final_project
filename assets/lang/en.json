@@ -75,5 +75,8 @@
   "inQueue": "Your request is in queue now",
   "refused": "Your request has been refused",
   "accepted": "Your request has been accepted",
-  "not exist": "No Request with this national ID"
+  "not exist": "No Request with this national ID",
+  "add new case": "Add New Case",
+  "money": "Money",
+  "empty image": "You must upload national id image"
 }

@@ -1,7 +1,7 @@
 import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/blocs/request_bloc/request_bloc.dart';
 import 'package:charity/constant/my_colors.dart';
-import 'package:charity/layout/request_layout.dart';
+import 'package:charity/screens/add_new_case_screen/add_new_case_screen.dart';
 import 'package:charity/widgets/back_compoent.dart';
 import 'package:charity/widgets/default_material_button.dart';
 import 'package:charity/widgets/details_component.dart';
@@ -140,7 +140,11 @@ class RequestDetailsScreen extends StatelessWidget {
                               text: getLang(context, "add")!,
                               textColor: Colors.white,
                               buttonColor: Colors.green,
-                              function: () {},
+                              function: () {
+                                Navigator.push(context ,
+                                  MaterialPageRoute(builder: (context)=>AddNewCaseScreen(request: request)),
+                                );
+                              },
                             ),
                           ),
                           Expanded(

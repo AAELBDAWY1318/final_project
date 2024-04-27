@@ -13,3 +13,18 @@ class ChangeCategory extends CasesCampaignsEvent {
   const ChangeCategory({required this.index});
 
 }
+
+class DropdownChange extends CasesCampaignsEvent{}
+
+class AddCaseWithRequest extends CasesCampaignsEvent{
+  final CaseModel caseModel;
+
+  const AddCaseWithRequest({required this.caseModel});
+}
+class AddCaseWithoutRequest extends CasesCampaignsEvent{
+  final CaseModel caseModel;
+
+  const AddCaseWithoutRequest({required this.caseModel});
+}
+
+

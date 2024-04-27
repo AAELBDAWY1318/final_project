@@ -1,5 +1,6 @@
 import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/constant/my_colors.dart';
+import 'package:charity/screens/add_new_case_screen/add_new_case_screen.dart';
 import 'package:charity/screens/search_screen/seach_screen.dart';
 import 'package:charity/size.dart';
 import 'package:charity/widgets/back_compoent.dart';
@@ -9,6 +10,7 @@ import 'package:charity/widgets/search_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:request_repository/request_repository.dart';
 
 class CasesScreen extends StatelessWidget {
   const CasesScreen({super.key});
@@ -21,7 +23,9 @@ class CasesScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         floatingActionButton: FloatingActionButton(
           onPressed: (){
-
+            Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddNewCaseScreen(request: Request.empty)),
+            );
           },
           backgroundColor: MyColors.myBlue,
           child: const Icon(Icons.add , color: Colors.white,),

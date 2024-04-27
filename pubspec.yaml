@@ -44,6 +44,8 @@ dependencies:
     path: packages/complaint_repository
   request_repository:
     path: packages/request_repository
+  case_campaign_repository:
+    path: packages/case_campaign_repository
   bloc: ^8.1.4
   flutter_bloc: ^8.1.4
   equatable: ^2.0.5
