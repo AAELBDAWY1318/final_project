@@ -1,3 +1,4 @@
+import 'package:charity/widgets/payment_details.dart';
 import 'package:flutter/material.dart';
 
 class DonateScreen extends StatelessWidget {
@@ -5,14 +6,16 @@ class DonateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        "Donate",
-        style: TextStyle(
-          fontSize: 20.0,
-          fontWeight: FontWeight.bold,
-        ),
+    return Scaffold(
+        appBar: AppBar(
+        leading: IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () => Navigator.pop(context),
       ),
+      centerTitle: true,
+      title: const Text('Donate' , textAlign: TextAlign.center,),
+       ),
+         body: const PaymentDetails(),
     );
   }
 }
