@@ -6,4 +6,6 @@ abstract class ComplaintRepository{
 
   Future<List<Complaint>> getComplaint();
 
+  Future<void> removeComplaintOrSuggestion(String id);
+
 }

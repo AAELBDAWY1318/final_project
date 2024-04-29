@@ -21,5 +21,25 @@ class ComplaintBloc extends Bloc<ComplaintEvent, ComplaintState> {
         emit(AddComplaintFailure());
       }
     });
+    on<GetComplaint>((event, emit) async{
+      try{
+        emit(GetComplaintProcess());
+        List<Complaint> complaints =  await complaintRepository.getComplaint();
+        emit(GetComplaintSuccess(complaints: complaints));
+      }catch(e){
+        log(e.toString());
+        emit(GetComplaintFailure());
+      }
+    });
+    on<RemoveComplaintEvent>((event, emit) async{
+      try{
+        emit(RemoveComplaintProcess());
+        await complaintRepository.removeComplaintOrSuggestion(event.id);
+        emit(RemoveComplaintSuccess());
+      }catch(e){
+        log(e.toString());
+        emit(RemoveComplaintFailure());
+      }
+    });
   }
 }

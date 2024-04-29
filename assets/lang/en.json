@@ -14,7 +14,7 @@
   "SignUp" : "SignUp",
   "This field must be assigned" : "This field must be assigned",
   "You must assign a valid email" : "You must assign a valid email",
-  "The email must be more than or equal to 8 chars" : "The email must be more than or equal to 8 chars",
+  "The email must be more than or equal to 8 chars" : "The password must be more than or equal to 8 chars",
   "Donate" : "Donate",
   "email-already-in-use" : "email-already-in-use",
   "Sign Up Error" : "Sign Up Error",
@@ -57,7 +57,6 @@
   "Successfully" : "Successfully Logout",
   "phone" : "Enter your phone number",
   "description" : "add description",
-  "title" : "Title",
   "success" : "Success",
   "failure" : "Failure",
   "waiting" : "Waiting...",
@@ -78,5 +77,13 @@
   "not exist": "No Request with this national ID",
   "add new case": "Add New Case",
   "money": "Money",
-  "empty image": "You must upload national id image"
+  "empty image": "You must upload national id image",
+  "edit" : "Edit",
+  "remove": "Remove",
+  "no case" : "No case found with this national ID",
+  "empty": "Nothing to show here",
+  "internet": "Check Your internet connection",
+  "details": "Details",
+  "title" : "Title",
+  "sImage": "Choose an Image"
 }

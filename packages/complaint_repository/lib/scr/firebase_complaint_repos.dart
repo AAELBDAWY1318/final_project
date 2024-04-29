@@ -18,11 +18,11 @@ class FirebaseComplaintRepository implements ComplaintRepository {
       List<Complaint> list = [];
       await complaintCollection.get().then((value) {
         value.docs.forEach((element) {
-          Map<String, dynamic>? data = element.data() as Map<String, dynamic>?;
-
-          if (data != null) {
-            Complaint complaint =
-                Complaint.fromEntity(ComplaintEntity.fromDocument(data));
+          log('${element.data()}');
+          if (element.data() != null) {
+            ComplaintEntity entity = ComplaintEntity.fromDocument(
+                element.data() as Map<String, dynamic>);
+            Complaint complaint = Complaint.fromEntity(entity);
             list.add(complaint);
           }
         });
@@ -50,6 +50,15 @@ class FirebaseComplaintRepository implements ComplaintRepository {
     } catch (e) {
       log(e.toString());
       rethrow;
+    }
+  }
+
+  @override
+  Future<void> removeComplaintOrSuggestion(String id) async{
+    try{
+      await complaintCollection.doc(id).delete();
+    }catch(e){
+      log(e.toString());
     }
   }
 }

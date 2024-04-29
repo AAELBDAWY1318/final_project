@@ -27,4 +27,26 @@ class AddCaseWithoutRequest extends CasesCampaignsEvent{
   const AddCaseWithoutRequest({required this.caseModel});
 }
 
+class GetAllCasesEvent extends CasesCampaignsEvent{}
+
+class RemoveCaseEvent extends CasesCampaignsEvent{
+  final String caseId;
+
+  const RemoveCaseEvent({required this.caseId});
+}
+
+class SearchInCasesEvent extends CasesCampaignsEvent{
+  final String caseId;
+
+  const SearchInCasesEvent({required this.caseId});
+}
+
+class AddCampaignEvent extends CasesCampaignsEvent{
+  final CampaignModel campaignModel;
+
+  const AddCampaignEvent({required this.campaignModel});
+}
+
+class GetCampaignsEvent extends CasesCampaignsEvent{}
+
 

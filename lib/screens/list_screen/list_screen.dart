@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:charity/blocs/my_user_bloc/my_user_bloc.dart';
-import 'package:charity/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:charity/screens/about_us_screen/about_us_screen.dart';
 import 'package:charity/screens/apply_request/apply_request.dart';
 import 'package:charity/screens/ask_about_request/ask_about_request_screen.dart';
@@ -11,13 +10,11 @@ import 'package:charity/screens/dashboard_screen/dashboard_screen.dart';
 import 'package:charity/screens/login/login.dart';
 import 'package:charity/screens/logout/logout.dart';
 import 'package:charity/screens/suggestion/suggestion.dart';
-import 'package:charity/widgets/default_material_button.dart';
 import 'package:charity/widgets/list_component.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_repository/scr/models/user.dart';
-import '../../constant/my_colors.dart';
 
 class ListScreen extends StatelessWidget {
   const ListScreen({super.key});
@@ -37,7 +34,24 @@ class ListScreen extends StatelessWidget {
             if (state.status == MyUserStatus.success) {
               // User data has been loaded, build the UI with user information
               return _buildListScreen(context, state.user!);
-            } else {
+            } else if (state.status == MyUserStatus.failure){
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/images/failure.png'),
+                    Text(
+                      getLang(context, "internet")!,
+                      style: const TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }else {
               // User data is loading or not available, show a loading indicator or placeholder
               return const Scaffold(
                 body: Center(

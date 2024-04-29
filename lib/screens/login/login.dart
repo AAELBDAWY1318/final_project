@@ -146,13 +146,6 @@ class LoginScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10.0,),
                     DefaultMaterialButton(
-                      text: getLang(context, "Login As Admin")!,
-                      textColor: Colors.black,
-                      buttonColor: MyColors.myWhile,
-                      function: () {},
-                    ),
-                    const SizedBox(height: 10.0,),
-                    DefaultMaterialButton(
                       text: getLang(context, "continue As Visitor")!,
                       textColor: Colors.black,
                       buttonColor: MyColors.myWhile,

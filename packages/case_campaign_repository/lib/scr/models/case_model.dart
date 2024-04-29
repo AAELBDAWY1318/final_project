@@ -36,7 +36,18 @@ class CaseModel extends Equatable {
         getAmount: getAmount);
   }
 
-  CaseModel fromEntity(CaseEntity entity) {
+  static CaseModel empty() => const CaseModel(
+      caseId: '',
+      name: '',
+      phone: '',
+      description: '',
+      idImage1: '',
+      idImage2: '',
+      category: '',
+      allAmount: '',
+      getAmount: '');
+
+  static CaseModel fromEntity(CaseEntity entity) {
     return CaseModel(
         caseId: entity.caseId,
         name: entity.name,
@@ -62,8 +73,8 @@ class CaseModel extends Equatable {
   }) {
     return CaseModel(
         caseId: caseId ?? this.caseId,
-        name: name?? this.name,
-        phone: phone?? this.phone,
+        name: name ?? this.name,
+        phone: phone ?? this.phone,
         description: description ?? this.description,
         idImage1: idImage1 ?? this.idImage1,
         idImage2: idImage2 ?? this.idImage2,

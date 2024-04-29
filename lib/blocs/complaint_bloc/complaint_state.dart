@@ -15,8 +15,16 @@ class AddComplaintSuccess extends ComplaintState {}
 class AddComplaintFailure extends ComplaintState {}
 
 class GetComplaintProcess extends ComplaintState {}
-class GetComplaintSuccess extends ComplaintState {}
+class GetComplaintSuccess extends ComplaintState {
+  final List<Complaint> complaints;
+
+  const GetComplaintSuccess({required this.complaints});
+}
 class GetComplaintFailure extends ComplaintState {}
+
+class RemoveComplaintProcess extends ComplaintState{}
+class RemoveComplaintSuccess extends ComplaintState{}
+class RemoveComplaintFailure extends ComplaintState{}
 
 
 

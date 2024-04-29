@@ -15,3 +15,9 @@ class AddComplaint extends ComplaintEvent {
 class GetComplaint extends ComplaintEvent {
   const GetComplaint();
 }
+
+class RemoveComplaintEvent extends ComplaintEvent{
+  final String id;
+
+  const RemoveComplaintEvent({required this.id});
+}

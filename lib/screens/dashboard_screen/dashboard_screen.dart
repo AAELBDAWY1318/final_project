@@ -1,7 +1,9 @@
 import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/layout/request_layout.dart';
+import 'package:charity/screens/add_campaign_screen/add_campaign_screen.dart';
 import 'package:charity/screens/browse_requests/browes_requests.dart';
 import 'package:charity/screens/cases_screen/cases_screen.dart';
+import 'package:charity/screens/complaint_suggestion_screen/complaint_suggestion_screen.dart';
 import 'package:charity/widgets/dashboard_item.dart';
 import 'package:charity/widgets/second_default_text.dart';
 import 'package:flutter/material.dart';
@@ -39,12 +41,20 @@ class DashBoardScreen extends StatelessWidget {
       DashboardItem(
         text: getLang(context, "complaints")!,
         image: 'assets/images/suggest.png',
-        onTap: () {},
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context)=> const ComplaintSuggestionScreen())
+          );
+        },
       ),
       DashboardItem(
         text: getLang(context, "add campaign")!,
         image: 'assets/images/add.png',
-        onTap: () {},
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context)=> const AddCampaignScreen())
+          );
+        },
       ),
       DashboardItem(
         text: getLang(context, "result")!,
