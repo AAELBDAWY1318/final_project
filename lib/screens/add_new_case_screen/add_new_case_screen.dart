@@ -39,6 +39,7 @@ class AddNewCaseScreen extends StatelessWidget {
       getLang(context, "Students")!,
       getLang(context, "Debtors")!,
     ];
+    String category = "Poor";
     String dropdownValue = getLang(context, "Poor")!;
     String ? imagePath1 , imagePath2;
     return BlocProvider<CasesCampaignsBloc>(
@@ -268,6 +269,15 @@ class AddNewCaseScreen extends StatelessWidget {
                           onChange: (String? val) {
                             if (val != dropdownValue) { // Check if the value has changed
                               dropdownValue = val!;
+                              if(dropdownValue == getLang(context, "Poor")!){
+                                category = "Poor";
+                              }else if(dropdownValue == getLang(context, "Widows")!){
+                                category = "Widows";
+                              }else if(dropdownValue == getLang(context, "Students")!){
+                                category = "Students";
+                              }else if(dropdownValue == getLang(context, "Debtors")!){
+                                category = "Debtors";
+                              }
                               context.read<CasesCampaignsBloc>().add(
                                 DropdownChange(), // Dispatch event only if value has changed
                               );
@@ -305,7 +315,7 @@ class AddNewCaseScreen extends StatelessWidget {
                                     description: request.description,
                                     idImage1: request.idImage1,
                                     idImage2: request.idImage2,
-                                    category: dropdownValue,
+                                    category: category,
                                     allAmount: moneyController.text,
                                     getAmount: "0.0");
                                 context.read<CasesCampaignsBloc>().add(
@@ -320,7 +330,7 @@ class AddNewCaseScreen extends StatelessWidget {
                                       description: descriptionController.text,
                                       idImage1: imagePath1!,
                                       idImage2: imagePath2!,
-                                      category: dropdownValue,
+                                      category: category,
                                       allAmount: moneyController.text,
                                       getAmount: "0.0");
                                   context.read<CasesCampaignsBloc>().add(

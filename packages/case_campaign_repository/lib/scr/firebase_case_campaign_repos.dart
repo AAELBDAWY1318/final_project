@@ -155,7 +155,7 @@ class FirebaseCaseCampaignRepository implements CaseCampaignRepository {
   Future<List<CaseModel>> getDebtorsCases() async{
     List<CaseModel> list = [];
     try {
-      await casesCollection.where("flag").get().then((value) {
+      await casesCollection.where("category" , isEqualTo: "Debtors").get().then((value) {
         value.docs.forEach((element) {
           if (element.data() != null) {
             CaseEntity caseEntity =
@@ -174,21 +174,69 @@ class FirebaseCaseCampaignRepository implements CaseCampaignRepository {
   }
 
   @override
-  Future<List<CaseModel>> getPoorCases() {
-    // TODO: implement getPoorCases
-    throw UnimplementedError();
+  Future<List<CaseModel>> getPoorCases() async{
+    List<CaseModel> list = [];
+    try {
+      await casesCollection.where("category" , isEqualTo: "Poor").get().then((value) {
+        value.docs.forEach((element) {
+          if (element.data() != null) {
+            CaseEntity caseEntity =
+            CaseEntity.fromDocument(element.data() as Map<String, dynamic>);
+            CaseModel caseModel = CaseModel.fromEntity(caseEntity);
+            list.add(caseModel);
+          }
+        });
+      }).catchError((e) {
+        log(e.toString());
+      });
+    } catch (e) {
+      log(e.toString());
+    }
+    return list;
   }
 
   @override
-  Future<List<CaseModel>> getStudentsCases() {
-    // TODO: implement getStudentsCases
-    throw UnimplementedError();
+  Future<List<CaseModel>> getStudentsCases()async {
+    List<CaseModel> list = [];
+    try {
+      await casesCollection.where("category" , isEqualTo: "Students").get().then((value) {
+        value.docs.forEach((element) {
+          if (element.data() != null) {
+            CaseEntity caseEntity =
+            CaseEntity.fromDocument(element.data() as Map<String, dynamic>);
+            CaseModel caseModel = CaseModel.fromEntity(caseEntity);
+            list.add(caseModel);
+          }
+        });
+      }).catchError((e) {
+        log(e.toString());
+      });
+    } catch (e) {
+      log(e.toString());
+    }
+    return list;
   }
 
   @override
-  Future<List<CaseModel>> getWidowsCases() {
-    // TODO: implement getWidowsCases
-    throw UnimplementedError();
+  Future<List<CaseModel>> getWidowsCases() async{
+    List<CaseModel> list = [];
+    try {
+      await casesCollection.where("category" , isEqualTo: "Widows").get().then((value) {
+        value.docs.forEach((element) {
+          if (element.data() != null) {
+            CaseEntity caseEntity =
+            CaseEntity.fromDocument(element.data() as Map<String, dynamic>);
+            CaseModel caseModel = CaseModel.fromEntity(caseEntity);
+            list.add(caseModel);
+          }
+        });
+      }).catchError((e) {
+        log(e.toString());
+      });
+    } catch (e) {
+      log(e.toString());
+    }
+    return list;
   }
 
 }
