@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:charity/constant/my_colors.dart';
 import 'package:charity/widgets/custom_credit_card.dart';
 import 'package:charity/widgets/payment_method_item.dart';
@@ -7,10 +9,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'default_material_button.dart';
 
-class PaymentDetails extends StatelessWidget {
+class PaymentDetails extends StatefulWidget {
   const PaymentDetails({super.key});
 
-  //final GlobalKey<FormState> formKey = GlobalKey();
+  @override
+  State<PaymentDetails> createState() => _PaymentDetailsState();
+}
+
+class _PaymentDetailsState extends State<PaymentDetails> {
+  final GlobalKey<FormState> formKey = GlobalKey();
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +27,11 @@ class PaymentDetails extends StatelessWidget {
         const SliverToBoxAdapter(
           child: PaymentMethodListView(),
         ),
-        const SliverToBoxAdapter(
-          child: custom_credit_card(),
+        SliverToBoxAdapter(
+          child: custom_credit_card(
+            autovalidateMode: autovalidateMode,
+            formKey: formKey,
+          ),
         ),
         SliverFillRemaining(
           hasScrollBody: false,
@@ -31,7 +42,15 @@ class PaymentDetails extends StatelessWidget {
               child: DefaultMaterialButton(
                 textColor: MyColors.myWhile,
                 buttonColor: MyColors.myBlue,
-                function: () {},
+                function: () {
+                  if (formKey.currentState!.validate()) {
+                    formKey.currentState!.save();
+                    log('Donate');
+                  } else {
+                    autovalidateMode = AutovalidateMode.always;
+                    setState(() {});
+                  }
+                },
                 text: 'Donate',
               ),
             ),
