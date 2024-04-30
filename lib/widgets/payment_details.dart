@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:charity/constant/my_colors.dart';
+import 'package:charity/screens/donate_screen/thank_you_view.dart';
 import 'package:charity/widgets/custom_credit_card.dart';
 import 'package:charity/widgets/payment_method_item.dart';
 import 'package:charity/widgets/payment_methods_list_view.dart';
@@ -47,6 +48,11 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                     formKey.currentState!.save();
                     log('Donate');
                   } else {
+                    // هنا بعمل navigate بس من غير حاجه
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return const ThankYouView();
+                    }));
                     autovalidateMode = AutovalidateMode.always;
                     setState(() {});
                   }
