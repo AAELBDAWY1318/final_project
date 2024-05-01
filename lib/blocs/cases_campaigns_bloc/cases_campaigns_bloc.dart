@@ -94,8 +94,51 @@ class CasesCampaignsBloc extends Bloc<CasesCampaignsEvent, CasesCampaignsState> 
         emit(GetCampaignsFailure());
       }
     });
+    on<GetPoorCasesEvent>((event, emit) async {
+      try{
+        emit(GetPoorCasesProcess());
+        List<CaseModel> list = await caseCampaignRepository.getPoorCases();
+        emit(GetPoorCasesSuccess(list: list));
+      }catch(e){
+        log(e.toString());
+        emit(GetPoorCasesFailure());
+      }
+    });
+    on<GetWidowsCasesEvent>((event, emit) async {
+      try{
+        emit(GetWidowsCasesProcess());
+        List<CaseModel> list = await caseCampaignRepository.getWidowsCases();
+        emit(GetWidowsCasesSuccess(list: list));
+      }catch(e){
+        log(e.toString());
+        emit(GetWidowsCasesFailure());
+      }
+    });
+    on<GetStudentsCasesEvent>((event, emit) async {
+      try{
+        emit(GetStudentsCasesProcess());
+        List<CaseModel> list = await caseCampaignRepository.getStudentsCases();
+        emit(GetStudentsCasesSuccess(list: list));
+      }catch(e){
+        log(e.toString());
+        emit(GetStudentsCasesFailure());
+      }
+    });
+    on<GetDebtorsCasesEvent>((event, emit) async {
+      try{
+        emit(GetDebtorsCasesProcess());
+        List<CaseModel> list = await caseCampaignRepository.getDebtorsCases();
+        emit(GetDebtorsCasesSuccess(list: list));
+      }catch(e){
+        log(e.toString());
+        emit(GetDebtorsCasesFailure());
+      }
+    });
   }
-
+  @override
+  Future<void> close() async {
+    return await super.close();
+  }
   // get method to get an object from the current BLoC
   static CasesCampaignsBloc get(BuildContext context) {
     return BlocProvider.of<CasesCampaignsBloc>(context);

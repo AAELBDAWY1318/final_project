@@ -49,4 +49,12 @@ class AddCampaignEvent extends CasesCampaignsEvent{
 
 class GetCampaignsEvent extends CasesCampaignsEvent{}
 
+class GetPoorCasesEvent extends CasesCampaignsEvent{}
+
+class GetWidowsCasesEvent extends CasesCampaignsEvent{}
+
+class GetStudentsCasesEvent extends CasesCampaignsEvent{}
+
+class GetDebtorsCasesEvent extends CasesCampaignsEvent{}
+
 

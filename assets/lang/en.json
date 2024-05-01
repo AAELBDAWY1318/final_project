@@ -57,9 +57,6 @@
   "Successfully" : "Successfully Logout",
   "phone" : "Enter your phone number",
   "description" : "add description",
-  "success" : "Success",
-  "failure" : "Failure",
-  "waiting" : "Waiting...",
   "id" : "Enter your national ID",
   "id face": "ID face image",
   "id tail": "ID tail image",
@@ -85,5 +82,8 @@
   "internet": "Check Your internet connection",
   "details": "Details",
   "title" : "Title",
-  "sImage": "Choose an Image"
+  "sImage": "Choose an Image",
+  "success" : "Success",
+  "failure" : "Failure",
+  "waiting" : "Waiting..."
 }

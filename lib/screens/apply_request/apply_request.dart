@@ -1,5 +1,3 @@
-import 'dart:developer';
-import 'dart:io';
 import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/blocs/request_bloc/request_bloc.dart';
 import 'package:charity/constant/my_colors.dart';
@@ -7,12 +5,14 @@ import 'package:charity/widgets/back_compoent.dart';
 import 'package:charity/widgets/camera_component.dart';
 import 'package:charity/widgets/default_material_button.dart';
 import 'package:charity/widgets/default_text_form_field.dart';
+import 'package:charity/widgets/failure_dialog.dart';
+import 'package:charity/widgets/loading_dialog.dart';
 import 'package:charity/widgets/second_default_text.dart';
+import 'package:charity/widgets/success_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:request_repository/request_repository.dart';
-import 'package:path/path.dart';
 
 class ApplyRequestScreen extends StatelessWidget {
   const ApplyRequestScreen({super.key});
@@ -35,9 +35,7 @@ class ApplyRequestScreen extends StatelessWidget {
             showDialog(
               context: context,
               builder: (context){
-                return const AlertDialog(
-                  content: CircularProgressIndicator(),
-                );
+                return const LoadingDialog();
               }
             );
           }else if (state is AddRequestFailure){
@@ -45,17 +43,9 @@ class ApplyRequestScreen extends StatelessWidget {
             showDialog(
                 context: context,
                 builder: (context){
-                  return AlertDialog(
-                    content: Image.asset('assets/images/failure.png'),
-                    actions: [
-                      TextButton(
-                        child: const Icon(Icons.done),
-                        onPressed: (){
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  );
+                  return FailureDialog(onPressed: (){
+                    Navigator.pop(context);
+                  });
                 }
             );
           }else if(state is AddRequestSuccess){
@@ -63,24 +53,10 @@ class ApplyRequestScreen extends StatelessWidget {
             showDialog(
                 context: context,
                 builder: (context){
-                  return AlertDialog(
-                    content: Image.asset('assets/images/success.png'),
-                    actions: [
-                      TextButton(
-                        child: const Icon(Icons.done),
-                        onPressed: (){
-                          Navigator.pop(context);
-                          nameController.text='';
-                          imagePath2='';
-                          imagePath1='';
-                          descriptionController.text ='';
-                          idController.text ='';
-                          phoneController.text ='';
-
-                        },
-                      ),
-                    ],
-                  );
+                  return SuccessDialog(onPressed: (){
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  });
                 }
             );
           }

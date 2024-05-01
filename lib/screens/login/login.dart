@@ -4,10 +4,13 @@ import 'package:charity/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:charity/constant/my_colors.dart';
 import 'package:charity/screens/reset_password_screen/reset_password_screen.dart';
 import 'package:charity/screens/sign_up/sign_up.dart';
+import 'package:charity/widgets/animated_loading.dart';
 import 'package:charity/widgets/default_material_button.dart';
 import 'package:charity/widgets/default_text_button.dart';
 import 'package:charity/widgets/default_text_form_field.dart';
+import 'package:charity/widgets/failure_dialog.dart';
 import 'package:charity/widgets/first_default_text.dart';
+import 'package:charity/widgets/loading_dialog.dart';
 import 'package:charity/widgets/upper_com.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,27 +40,16 @@ class LoginScreen extends StatelessWidget {
             showDialog(
               context: context,
               builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text(getLang(context , "Sign In Error")!),
-                  content: Text(state.message ?? "Unknown error occurred"),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(getLang(context,  "OK")!),
-                    ),
-                  ],
-                );
+                return FailureDialog(onPressed: (){
+                  Navigator.pop(context);
+                });
               },
             );
           }else if(state is SignInProcess){
             showDialog(
                 context: context,
                 builder: (BuildContext context){
-                  return const AlertDialog(
-                    content: CircularProgressIndicator(),
-                  );
+                  return const LoadingDialog();
                 }
             );
           }
