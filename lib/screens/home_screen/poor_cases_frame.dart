@@ -1,6 +1,7 @@
 import 'package:case_campaign_repository/case_campaign_repository.dart';
 import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/blocs/cases_campaigns_bloc/cases_campaigns_bloc.dart';
+import 'package:charity/screens/case_donor_view/case_donor_view.dart';
 import 'package:charity/size.dart';
 import 'package:charity/widgets/case_component.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,15 @@ class PoorCasesFrame extends StatelessWidget {
                           collectedAmount: double.parse(
                               state.list[index].getAmount),
                           allAmount: double.parse(
-                              state.list[index].allAmount));
+                              state.list[index].allAmount),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CaseDonorView(
+                                      caseModel: state.list[index])));
+                        },
+                      );
                     },
                     separatorBuilder: (context, index) =>
                     const SizedBox(

@@ -1,6 +1,7 @@
 import 'package:case_campaign_repository/case_campaign_repository.dart';
 import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/blocs/cases_campaigns_bloc/cases_campaigns_bloc.dart';
+import 'package:charity/screens/case_donor_view/case_donor_view.dart';
 import 'package:charity/size.dart';
 import 'package:charity/widgets/animated_loading.dart';
 import 'package:charity/widgets/case_component.dart';
@@ -19,9 +20,9 @@ class AllCasesFrame extends StatelessWidget {
         ..add(
           GetAllCasesEvent(),
         ),
-      child: BlocBuilder<CasesCampaignsBloc , CasesCampaignsState>(
-        builder: (context , state){
-          if(state is GetAllCasesFailure ){
+      child: BlocBuilder<CasesCampaignsBloc, CasesCampaignsState>(
+        builder: (context, state) {
+          if (state is GetAllCasesFailure) {
             return Center(
               child: Image.asset(
                 'assets/images/failure.png',
@@ -29,7 +30,7 @@ class AllCasesFrame extends StatelessWidget {
                 width: 100,
               ),
             );
-          }else if (state is GetAllCasesSuccess){
+          } else if (state is GetAllCasesSuccess) {
             if (state.list.isNotEmpty) {
               return SizedBox(
                 height: sizeConfig.screenHeight! * 0.4,
@@ -37,17 +38,23 @@ class AllCasesFrame extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return CaseComponent(
-                          title: "XXX XXX",
-                          description: state.list[index].description,
-                          collectedAmount: double.parse(
-                              state.list[index].getAmount),
-                          allAmount: double.parse(
-                              state.list[index].allAmount));
+                        title: "XXX XXX",
+                        description: state.list[index].description,
+                        collectedAmount:
+                            double.parse(state.list[index].getAmount),
+                        allAmount: double.parse(state.list[index].allAmount),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CaseDonorView(
+                                      caseModel: state.list[index])));
+                        },
+                      );
                     },
-                    separatorBuilder: (context, index) =>
-                    const SizedBox(
-                      width: 5.0,
-                    ),
+                    separatorBuilder: (context, index) => const SizedBox(
+                          width: 5.0,
+                        ),
                     itemCount: state.list.length),
               );
             } else {
@@ -74,9 +81,8 @@ class AllCasesFrame extends StatelessWidget {
                 ),
               );
             }
-          }else {
-            return const Center(
-                child: LoadingAnimation());
+          } else {
+            return const Center(child: LoadingAnimation());
           }
         },
       ),

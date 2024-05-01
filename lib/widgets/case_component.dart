@@ -7,9 +7,11 @@ class CaseComponent extends StatelessWidget {
   final String title, description;
   final String? imageUrl;
   final double collectedAmount, allAmount;
+  final Function()? onTap;
   const CaseComponent(
       {super.key,
       this.imageUrl,
+      this.onTap,
       required this.title,
       required this.description,
       required this.collectedAmount,
@@ -22,85 +24,89 @@ class CaseComponent extends StatelessWidget {
       progressValue = collectedAmount / allAmount;
     }
     SizeConfig sizeConfig = SizeConfig()..init(context);
-    return Container(
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      width: sizeConfig.screenWidth! * 0.95,
-      height: sizeConfig.screenHeight! * 0.4,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(
-          20.0,
+    return GestureDetector(
+      onTap: onTap ?? () {},
+      child: Container(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        width: sizeConfig.screenWidth! * 0.95,
+        height: sizeConfig.screenHeight! * 0.4,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(
+            20.0,
+          ),
+          border: Border.all(
+            width: 1.5,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: MyColors.myWhile,
+              blurRadius: 20.0,
+              offset: const Offset(8, 8),
+            ),
+          ],
         ),
-        border: Border.all(
-          width: 1.5,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            MyConditionalBuilder(
+              condition: (imageUrl != null),
+              whenTrueCondition: imageUrl != null
+                  ? Image.network(
+                      imageUrl!,
+                      height: sizeConfig.screenHeight! * 0.2,
+                      width: sizeConfig.screenWidth! * 0.95,
+                      fit: BoxFit.cover,
+                    )
+                  : const SizedBox(), // Or any other placeholder widget
+              whenFalseCondition: Image.asset(
+                'assets/images/myLogo.png',
+                height: sizeConfig.screenHeight! * 0.2,
+                width: sizeConfig.screenWidth! * 0.95,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17.0,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Text(
+                description,
+                style: const TextStyle(
+                  fontSize: 17.0,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: LinearProgressIndicator(
+                value: progressValue,
+                color: MyColors.myBlue,
+              ),
+            ),
+            const SizedBox(
+                height: 4), // Add space between title and description
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Text(
+                '$collectedAmount / $allAmount',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
         ),
-        boxShadow: [
-          BoxShadow(
-            color: MyColors.myWhile,
-            blurRadius: 20.0,
-            offset: const Offset(8, 8),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          MyConditionalBuilder(
-            condition: (imageUrl != null),
-            whenTrueCondition: imageUrl != null
-                ? Image.network(
-                    imageUrl!,
-                    height: sizeConfig.screenHeight! * 0.2,
-                    width: sizeConfig.screenWidth! * 0.95,
-                    fit: BoxFit.cover,
-                  )
-                : const SizedBox(), // Or any other placeholder widget
-            whenFalseCondition: Image.asset(
-              'assets/images/myLogo.png',
-              height: sizeConfig.screenHeight! * 0.2,
-              width: sizeConfig.screenWidth! * 0.95,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 17.0,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Text(
-              description,
-              style: const TextStyle(
-                fontSize: 17.0,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: LinearProgressIndicator(
-              value: progressValue,
-              color: MyColors.myBlue,
-            ),
-          ),
-          const SizedBox(height: 4), // Add space between title and description
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Text(
-              '$collectedAmount / $allAmount',
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
       ),
     );
   }

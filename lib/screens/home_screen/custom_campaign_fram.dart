@@ -2,6 +2,7 @@ import 'package:case_campaign_repository/case_campaign_repository.dart';
 import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/blocs/cases_campaigns_bloc/cases_campaigns_bloc.dart';
 import 'package:charity/constant/my_colors.dart';
+import 'package:charity/screens/campaign_donor_view/campaign_donor_view.dart';
 import 'package:charity/size.dart';
 import 'package:charity/widgets/animated_loading.dart';
 import 'package:charity/widgets/case_component.dart';
@@ -68,14 +69,24 @@ class CustomCampaignFrame extends StatelessWidget {
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
                                   return CaseComponent(
-                                      imageUrl: state.list[index].photo,
-                                      title: state.list[index].title,
-                                      description:
-                                          state.list[index].description,
-                                      collectedAmount: double.parse(
-                                          state.list[index].collectedAmount),
-                                      allAmount: double.parse(
-                                          state.list[index].allAmount));
+                                    imageUrl: state.list[index].photo,
+                                    title: state.list[index].title,
+                                    description: state.list[index].description,
+                                    collectedAmount: double.parse(
+                                        state.list[index].collectedAmount),
+                                    allAmount: double.parse(
+                                        state.list[index].allAmount),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CampaignDonorView(
+                                                    campaignModel:
+                                                        state.list[index])),
+                                      );
+                                    },
+                                  );
                                 },
                                 separatorBuilder: (context, index) =>
                                     const SizedBox(
@@ -110,9 +121,9 @@ class CustomCampaignFrame extends StatelessWidget {
                       } else {
                         return Center(
                             child: Container(
-                              color: MyColors.myWhile,
-                              child: const LoadingAnimation(),
-                            ));
+                          color: MyColors.myWhile,
+                          child: const LoadingAnimation(),
+                        ));
                       }
                     },
                   ),

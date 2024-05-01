@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../widgets/animated_loading.dart';
+import '../case_donor_view/case_donor_view.dart';
 
 class StudentsCasesFrame extends StatelessWidget {
   const StudentsCasesFrame({super.key});
@@ -43,7 +44,15 @@ class StudentsCasesFrame extends StatelessWidget {
                           collectedAmount: double.parse(
                               state.list[index].getAmount),
                           allAmount: double.parse(
-                              state.list[index].allAmount));
+                              state.list[index].allAmount),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CaseDonorView(
+                                      caseModel: state.list[index])));
+                        },
+                      );
                     },
                     separatorBuilder: (context, index) =>
                     const SizedBox(
