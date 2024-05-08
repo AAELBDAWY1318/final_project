@@ -24,4 +24,9 @@ abstract class CaseCampaignRepository {
 
   Future<List<CaseModel>> getDebtorsCases();
 
+  Future<void> deleteCampaign(CampaignModel campaignModel);
+
+  Future<void> editCampaign(CampaignModel campaignModel);
+
+  Future<List<CaseModel>> getCompleteCases();
 }

@@ -134,6 +134,36 @@ class CasesCampaignsBloc extends Bloc<CasesCampaignsEvent, CasesCampaignsState> 
         emit(GetDebtorsCasesFailure());
       }
     });
+    on<RemoveCampaignEvent>((event, emit) async{
+      try{
+        emit(RemoveCampaignProcess());
+        await caseCampaignRepository.deleteCampaign(event.campaignModel);
+        emit(RemoveCampaignSuccess());
+      }catch(e){
+        log(e.toString());
+        emit(RemoveCampaignFailure());
+      }
+    });
+    on<EditCampaignEvent>((event, emit) async{
+      try{
+        emit(EditCampaignProcess());
+        await caseCampaignRepository.editCampaign(event.campaignModel);
+        emit(EditCampaignSuccess());
+      }on FirebaseException catch(e){
+        log(e.toString());
+        emit(EditCampaignFailure());
+      }
+    });
+    on<GetCompletedCases>((event, emit) async {
+      try{
+        emit(GetCompletedCasesProcess());
+        List<CaseModel> list = await caseCampaignRepository.getCompleteCases();
+        emit(GetCompletedCasesSuccess(list: list));
+      }on FirebaseException catch(e){
+        log(e.toString());
+        emit(GetCompletedCasesFailure());
+      }
+    });
   }
   @override
   Future<void> close() async {

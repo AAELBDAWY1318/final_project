@@ -10,6 +10,7 @@ class DefaultTextFormField extends StatelessWidget {
   final String? Function(String?)? validator; // Validator function is now nullable
   final TextEditingController controller;
   final Function () ? suffixIconTap ;
+  final TextInputType ? keyboardType;
 
   const DefaultTextFormField({
     super.key,
@@ -20,6 +21,7 @@ class DefaultTextFormField extends StatelessWidget {
     this.secure,
     this.suffixIconTap,
     required this.controller,
+    this.keyboardType,
   });
 
   @override
@@ -53,6 +55,7 @@ class DefaultTextFormField extends StatelessWidget {
         validator: validator, // Validator function is now nullable
         controller: controller,
         obscureText: secure?? false,
+        keyboardType: keyboardType ?? TextInputType.text,
       ),
     );
   }

@@ -32,26 +32,28 @@ class LoginScreen extends StatelessWidget {
       ),
       child: BlocConsumer<SignInBloc, SignInState>(
         listener: (context, state) {
-          if(state is SignInSuccess){
-            Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context)=>const AppLayout()),
+          if (state is SignInSuccess) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const AppLayout()),
+              (route) => false,
             );
-          }else if(state is SignInFailure){
-            showDialog(
+          } else if (state is SignInFailure) {
+             showDialog(
               context: context,
               builder: (BuildContext context) {
-                return FailureDialog(onPressed: (){
+                return FailureDialog(onPressed: () {
+                  Navigator.pop(context);
                   Navigator.pop(context);
                 });
               },
             );
-          }else if(state is SignInProcess){
+          } else if (state is SignInProcess) {
             showDialog(
                 context: context,
-                builder: (BuildContext context){
+                builder: (BuildContext context) {
                   return const LoadingDialog();
-                }
-            );
+                });
           }
         },
         builder: (context, state) {
@@ -61,13 +63,14 @@ class LoginScreen extends StatelessWidget {
               key: formKey,
               child: SingleChildScrollView(
                 child: Column(
-                  children:
-                  [
+                  children: [
                     const UpperComponent(),
                     FirstDefaultText(
                       text: getLang(context, 'Login')!,
                     ),
-                    const SizedBox(height: 10.0,),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
                     DefaultTextFormField(
                       controller: emailController,
                       icon: Icons.alternate_email,
@@ -75,23 +78,28 @@ class LoginScreen extends StatelessWidget {
                       validator: (val) {
                         // Regular expression for email validation
                         final RegExp emailRegex =
-                        RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                            RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
                         if (val!.isEmpty) {
-                          return getLang(context, "This field must be assigned");
+                          return getLang(
+                              context, "This field must be assigned");
                         } else if (!emailRegex.hasMatch(val)) {
-                          return getLang(context, "You must assign a valid email");
+                          return getLang(
+                              context, "You must assign a valid email");
                         }
                         return null;
                       },
                     ),
-                    const SizedBox(height: 10.0,),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
                     DefaultTextFormField(
                       controller: passwordController,
                       icon: Icons.lock,
                       label: getLang(context, "Enter Your Password")!,
                       validator: (val) {
                         if (val!.isEmpty) {
-                          return getLang(context, "This field must be assigned");
+                          return getLang(
+                              context, "This field must be assigned");
                         } else if (val!.length < 8) {
                           return getLang(context,
                               "The email must be more than or equal to 8 chars");
@@ -100,17 +108,23 @@ class LoginScreen extends StatelessWidget {
                       },
                       secure: true,
                     ),
-                    const SizedBox(height: 10.0,),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
                     DefaultTextButton(
                       text: getLang(context, "Forget Password ?")!,
                       function: () {
                         Navigator.push(
-                          context ,
-                          MaterialPageRoute(builder: (context)=>const ResetPasswordScreen()),
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const ResetPasswordScreen()),
                         );
                       },
                     ),
-                    const SizedBox(height: 10.0,),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
                     DefaultMaterialButton(
                       text: getLang(context, "Login")!,
                       textColor: Colors.white,
@@ -118,36 +132,45 @@ class LoginScreen extends StatelessWidget {
                       function: () {
                         if (formKey.currentState!.validate()) {
                           context.read<SignInBloc>().add(
-                            SignInRequired(
-                                email: emailController.text,
-                                password: passwordController.text,
-                            ),
-                          );
+                                SignInRequired(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                ),
+                              );
                         }
                       },
                     ),
-                    const SizedBox(height: 10.0,),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
                     DefaultTextButton(
                       function: () {
-                        Navigator.push(context,
+                        Navigator.push(
+                          context,
                           MaterialPageRoute(
                               builder: (context) => const SignUpScreen()),
                         );
                       },
                       text: getLang(context, "Create A New Account")!,
                     ),
-                    const SizedBox(height: 10.0,),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
                     DefaultMaterialButton(
                       text: getLang(context, "continue As Visitor")!,
                       textColor: Colors.black,
                       buttonColor: MyColors.myWhile,
                       function: () {
-                        Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const AppLayout()),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AppLayout()),
                         );
                       },
                     ),
-                    const SizedBox(height: 10.0,),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
                   ],
                 ),
               ),

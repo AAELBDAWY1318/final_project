@@ -85,5 +85,9 @@
   "sImage": "Choose an Image",
   "success" : "Success",
   "failure" : "Failure",
-  "waiting" : "Waiting..."
+  "waiting" : "Waiting...",
+  "lang": "Select Language",
+  "connection": "Check Your Internet Connection",
+  "amount": "Enter your donation amount",
+  "invalid": "The amount must be number"
 }

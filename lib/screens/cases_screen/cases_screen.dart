@@ -5,6 +5,7 @@ import 'package:charity/constant/my_colors.dart';
 import 'package:charity/screens/add_new_case_screen/add_new_case_screen.dart';
 import 'package:charity/screens/case_admin_viewScreen/case_admin_view.dart';
 import 'package:charity/screens/search_screen/seach_screen.dart';
+import 'package:charity/widgets/animated_loading.dart';
 import 'package:charity/widgets/back_compoent.dart';
 import 'package:charity/widgets/case_ticket.dart';
 import 'package:charity/widgets/search_box.dart';
@@ -61,7 +62,7 @@ class CasesScreen extends StatelessWidget {
                   if(State is GetAllCasesFailure){
                     return getCasesFailureBuilding();
                   }else if(state is GetAllCasesSuccess){
-                    return getCasesSuccessBuilding(state.list);
+                    return getCasesSuccessBuilding(state.list , context);
                   }else{
                     return loadingBuild();
                   }
@@ -76,10 +77,8 @@ class CasesScreen extends StatelessWidget {
 
   // the body building when get cases is loading
   Widget loadingBuild() {
-    return Center(
-      child: CircularProgressIndicator(
-        color: MyColors.myBlue,
-      ),
+    return const Center(
+      child: LoadingAnimation(),
     );
   }
 
@@ -89,19 +88,34 @@ class CasesScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: Image.asset(
           'assets/images/failure.png',
+          height: 120.0,
         ),
       ),
     );
   }
 
-  Widget getCasesSuccessBuilding(List<CaseModel> list) {
+  Widget getCasesSuccessBuilding(List<CaseModel> list , BuildContext context) {
     if (list.isEmpty) {
       return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Image.asset(
-            'assets/images/empty.png',
-          ),
+        child: Column(
+          children: [
+            Image.asset(
+              'assets/images/empty-box.png',
+              height: 100,
+              width: 100,
+            ),
+            const SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              getLang(context, "empty")!,
+              style: const TextStyle(
+                color: Colors.grey,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
       );
     } else {

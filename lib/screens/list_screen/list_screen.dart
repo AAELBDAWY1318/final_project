@@ -6,6 +6,7 @@ import 'package:charity/blocs/my_user_bloc/my_user_bloc.dart';
 import 'package:charity/screens/about_us_screen/about_us_screen.dart';
 import 'package:charity/screens/apply_request/apply_request.dart';
 import 'package:charity/screens/ask_about_request/ask_about_request_screen.dart';
+import 'package:charity/screens/change_language/change_language_screen.dart';
 import 'package:charity/screens/dashboard_screen/dashboard_screen.dart';
 import 'package:charity/screens/login/login.dart';
 import 'package:charity/screens/logout/logout.dart';
@@ -150,7 +151,11 @@ class ListScreen extends StatelessWidget {
       ),
       ListComponent(
         text: getLang(context, 'change lang')!,
-        onTap: () {},
+        onTap: () {
+          Navigator.push(context,
+            MaterialPageRoute(builder: (context)=> const ChangeLanguageScreen() ),
+          );
+        },
       ),
       ListComponent(
         text: getLang(context, 'logout')!,

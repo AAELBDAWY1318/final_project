@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CAMERA"
+        android:name="android.permission.INTERNET"
+        />
+
     <application
         android:label="charity"
         android:name="${applicationName}"

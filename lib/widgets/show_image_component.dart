@@ -17,6 +17,16 @@ class ShowImage extends StatelessWidget {
             content: Image.network(
              url,
               fit: BoxFit.cover,
+              errorBuilder: (BuildContext context, Object error,
+                  StackTrace? stackTrace) {
+                // Return an asset image as a fallback when the network image fails
+                return Text(
+                  getLang(context, 'connection')!,
+                  style: const TextStyle(
+                    color: Colors.red,
+                  ),
+                );
+              },
             ),
             actions: [
               TextButton(
@@ -34,6 +44,7 @@ class ShowImage extends StatelessWidget {
         width: sizeConfig.screenWidth! * 0.3,
         height: sizeConfig.screenHeight! * 0.2,
         decoration: BoxDecoration(
+          color: Colors.white,
           borderRadius: BorderRadius.circular(
             15.0,
           ),
@@ -52,6 +63,13 @@ class ShowImage extends StatelessWidget {
         child: Image.network(
           url,
           fit: BoxFit.cover,
+          errorBuilder: (BuildContext context, Object error,
+              StackTrace? stackTrace) {
+            // Return an asset image as a fallback when the network image fails
+            return Image.asset(
+              'assets/images/wifi.png',
+            );
+          },
         ),
       ),
     );

@@ -7,9 +7,12 @@ import 'package:charity/widgets/camera_component.dart';
 import 'package:charity/widgets/default_dropdown_button.dart';
 import 'package:charity/widgets/default_material_button.dart';
 import 'package:charity/widgets/default_text_form_field.dart';
+import 'package:charity/widgets/failure_dialog.dart';
+import 'package:charity/widgets/loading_dialog.dart';
 import 'package:charity/widgets/my_custom_conditional_builder.dart';
 import 'package:charity/widgets/second_default_text.dart';
 import 'package:charity/widgets/show_image_component.dart';
+import 'package:charity/widgets/success_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -41,107 +44,69 @@ class AddNewCaseScreen extends StatelessWidget {
     ];
     String category = "Poor";
     String dropdownValue = getLang(context, "Poor")!;
-    String ? imagePath1 , imagePath2;
+    String? imagePath1, imagePath2;
     return BlocProvider<CasesCampaignsBloc>(
       create: (context) => CasesCampaignsBloc(
           caseCampaignRepository: FirebaseCaseCampaignRepository()),
       child: BlocConsumer<CasesCampaignsBloc, CasesCampaignsState>(
         listener: (context, state) {
-          if(state is AddCaseWithRequestProcess){
+          if (state is AddCaseWithRequestProcess) {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return const LoadingDialog();
+              },
+            );
+          } else if (state is AddCaseWithRequestSuccess) {
+            Navigator.pop(context);
             showDialog(
               context: context,
               builder: (context){
-                return AlertDialog(
-                  content: CircularProgressIndicator(
-                    color: MyColors.myBlue,
-                  ),
-                );
-              }
+                return SuccessDialog(onPressed: (){
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                });
+              },
             );
-          }else if(state is AddCaseWithRequestSuccess){
+          } else if (state is AddCaseWithRequestFailure) {
             showDialog(
-                context: context,
-                builder: (context){
-                  return AlertDialog(
-                    content: Image.asset('assets/images/success.png'),
-                    actions: [
-                      TextButton(
-                        onPressed: (){
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                        },
-                        child: Text(getLang(context, "OK")!),
-                      )
-                    ],
-                  );
-                }
+              context: context,
+              builder: (context){
+                return FailureDialog(onPressed: (){
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                });
+              },
             );
-          }else if (state is AddCaseWithRequestFailure){
+          } else if (state is AddCaseWithoutRequestProcess) {
             showDialog(
-                context: context,
-                builder: (context){
-                  return AlertDialog(
-                    content: Image.asset('assets/images/failure.png'),
-                    actions: [
-                      TextButton(
-                        onPressed: (){
-                          Navigator.pop(context);
-                        },
-                        child: Text(getLang(context, "OK")!),
-                      )
-                    ],
-                  );
-                }
+              context: context,
+              builder: (context) {
+                return const LoadingDialog();
+              },
             );
-          }else if(state is AddCaseWithoutRequestProcess){
+          } else if (state is AddCaseWithoutRequestSuccess) {
+            Navigator.pop(context);
             showDialog(
-                context: context,
-                builder: (context){
-                  return AlertDialog(
-                    content: CircularProgressIndicator(
-                      color: MyColors.myBlue,
-                    ),
-                  );
-                }
+              context: context,
+              builder: (context){
+                return SuccessDialog(onPressed: (){
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                });
+              },
             );
-          }else if(state is AddCaseWithoutRequestSuccess){
+          } else if (state is AddCaseWithoutRequestFailure) {
             showDialog(
-                context: context,
-                builder: (context){
-                  return AlertDialog(
-                    content: Image.asset('assets/images/success.png'),
-                    actions: [
-                      TextButton(
-                        onPressed: (){
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                        },
-                        child: Text(getLang(context, "OK")!),
-                      )
-                    ],
-                  );
-                }
-            );
-          }else if (state is AddCaseWithoutRequestFailure){
-            showDialog(
-                context: context,
-                builder: (context){
-                  return AlertDialog(
-                    content: Image.asset('assets/images/failure.png'),
-                    actions: [
-                      TextButton(
-                        onPressed: (){
-                          Navigator.pop(context);
-                        },
-                        child: Text(getLang(context, "OK")!),
-                      )
-                    ],
-                  );
-                }
+              context: context,
+              builder: (context){
+                return FailureDialog(onPressed: (){
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                });
+              },
             );
           }
         },
@@ -168,8 +133,9 @@ class AddNewCaseScreen extends StatelessWidget {
                           label: getLang(context, "Name")!,
                           icon: Icons.person,
                           validator: (String? val) {
-                            if(val!.isEmpty){
-                              return getLang(context, "This field must be assigned")!;
+                            if (val!.isEmpty) {
+                              return getLang(
+                                  context, "This field must be assigned")!;
                             }
                             return null;
                           },
@@ -182,8 +148,9 @@ class AddNewCaseScreen extends StatelessWidget {
                           label: getLang(context, "id")!,
                           icon: Icons.credit_card_outlined,
                           validator: (String? val) {
-                            if(val!.isEmpty){
-                              return getLang(context, "This field must be assigned")!;
+                            if (val!.isEmpty) {
+                              return getLang(
+                                  context, "This field must be assigned")!;
                             }
                             return null;
                           },
@@ -196,8 +163,9 @@ class AddNewCaseScreen extends StatelessWidget {
                           label: getLang(context, "phone")!,
                           icon: Icons.phone,
                           validator: (String? val) {
-                            if(val!.isEmpty){
-                              return getLang(context, "This field must be assigned")!;
+                            if (val!.isEmpty) {
+                              return getLang(
+                                  context, "This field must be assigned")!;
                             }
                             return null;
                           },
@@ -210,8 +178,9 @@ class AddNewCaseScreen extends StatelessWidget {
                           label: getLang(context, "description")!,
                           icon: Icons.description,
                           validator: (String? val) {
-                            if(val!.isEmpty){
-                              return getLang(context, "This field must be assigned")!;
+                            if (val!.isEmpty) {
+                              return getLang(
+                                  context, "This field must be assigned")!;
                             }
                             return null;
                           },
@@ -267,20 +236,24 @@ class AddNewCaseScreen extends StatelessWidget {
                           dropdownItems: dropdownItems,
                           dropdownValue: dropdownValue,
                           onChange: (String? val) {
-                            if (val != dropdownValue) { // Check if the value has changed
+                            if (val != dropdownValue) {
+                              // Check if the value has changed
                               dropdownValue = val!;
-                              if(dropdownValue == getLang(context, "Poor")!){
+                              if (dropdownValue == getLang(context, "Poor")!) {
                                 category = "Poor";
-                              }else if(dropdownValue == getLang(context, "Widows")!){
+                              } else if (dropdownValue ==
+                                  getLang(context, "Widows")!) {
                                 category = "Widows";
-                              }else if(dropdownValue == getLang(context, "Students")!){
+                              } else if (dropdownValue ==
+                                  getLang(context, "Students")!) {
                                 category = "Students";
-                              }else if(dropdownValue == getLang(context, "Debtors")!){
+                              } else if (dropdownValue ==
+                                  getLang(context, "Debtors")!) {
                                 category = "Debtors";
                               }
                               context.read<CasesCampaignsBloc>().add(
-                                DropdownChange(), // Dispatch event only if value has changed
-                              );
+                                    DropdownChange(), // Dispatch event only if value has changed
+                                  );
                             }
                           },
                         ),
@@ -291,8 +264,9 @@ class AddNewCaseScreen extends StatelessWidget {
                           label: getLang(context, "money")!,
                           controller: moneyController,
                           validator: (String? val) {
-                            if(val!.isEmpty){
-                              return getLang(context, "This field must be assigned")!;
+                            if (val!.isEmpty) {
+                              return getLang(
+                                  context, "This field must be assigned")!;
                             }
                             return null;
                           },
@@ -319,10 +293,10 @@ class AddNewCaseScreen extends StatelessWidget {
                                     allAmount: moneyController.text,
                                     getAmount: "0.0");
                                 context.read<CasesCampaignsBloc>().add(
-                                  AddCaseWithRequest(caseModel: caseModel),
-                                );
-                              }else{
-                                if(imagePath1!= null&& imagePath2!= null){
+                                      AddCaseWithRequest(caseModel: caseModel),
+                                    );
+                              } else {
+                                if (imagePath1 != null && imagePath2 != null) {
                                   CaseModel caseModel = CaseModel(
                                       caseId: idController.text,
                                       name: nameController.text,
@@ -334,27 +308,28 @@ class AddNewCaseScreen extends StatelessWidget {
                                       allAmount: moneyController.text,
                                       getAmount: "0.0");
                                   context.read<CasesCampaignsBloc>().add(
-                                    AddCaseWithoutRequest(caseModel: caseModel),
-                                  );
-                                }else{
-                                  showDialog(
-                                    context: context,
-                                    builder: (context){
-                                      return AlertDialog(
-                                        content: Text(
-                                          getLang(context, "empty image")!,
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                            child: Text(getLang(context, "OK")!),
-                                            onPressed: (){
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                        ],
+                                        AddCaseWithoutRequest(
+                                            caseModel: caseModel),
                                       );
-                                    }
-                                  );
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content: Text(
+                                            getLang(context, "empty image")!,
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              child:
+                                                  Text(getLang(context, "OK")!),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      });
                                 }
                               }
                             }

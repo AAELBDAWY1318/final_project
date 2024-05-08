@@ -9,12 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:charity/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_repository/scr/firebase_user_repos.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String defaultLanguageCode = prefs.getString('lang') ?? 'en'; // Default language code
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(FirebaseUserRepos()));
+    await tester.pumpWidget(MyApp(FirebaseUserRepos(), defaultLanguageCode: defaultLanguageCode,));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

@@ -1,9 +1,10 @@
 import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/layout/request_layout.dart';
 import 'package:charity/screens/add_campaign_screen/add_campaign_screen.dart';
-import 'package:charity/screens/browse_requests/browes_requests.dart';
 import 'package:charity/screens/cases_screen/cases_screen.dart';
 import 'package:charity/screens/complaint_suggestion_screen/complaint_suggestion_screen.dart';
+import 'package:charity/screens/complete_case_screen/complete_cases_screen.dart';
+import 'package:charity/screens/manage_campaign/manage_campaign.dart';
 import 'package:charity/widgets/dashboard_item.dart';
 import 'package:charity/widgets/second_default_text.dart';
 import 'package:flutter/material.dart';
@@ -64,12 +65,20 @@ class DashBoardScreen extends StatelessWidget {
       DashboardItem(
         text: getLang(context, "complete cases")!,
         image: 'assets/images/complete.png',
-        onTap: () {},
+        onTap: () {
+          Navigator.push(context,
+            MaterialPageRoute(builder: (context)=>const CompleteCasesScreen()),
+          );
+        },
       ),
       DashboardItem(
         text: getLang(context, "manage campaign")!,
         image: 'assets/images/manage.png',
-        onTap: () {},
+        onTap: () {
+          Navigator.push(context,
+            MaterialPageRoute(builder:(context)=> const ManageCampaign()),
+          );
+        },
       ),
     ];
     return SafeArea(
@@ -82,6 +91,7 @@ class DashBoardScreen extends StatelessWidget {
               children: [
                 const Back(),
                 SecondDefaultText(text: getLang(context, 'dashboard')!, ),
+                const SizedBox(height: 10,),
                 GridView.builder(
                   physics: const NeverScrollableScrollPhysics(), // Disable scrolling
                   shrinkWrap: true, // Adjusts its size based on its children

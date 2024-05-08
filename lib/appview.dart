@@ -8,10 +8,13 @@ import 'app_locale/app_locale.dart';
 import 'layout/app_layout.dart';
 
 class AppView extends StatelessWidget {
-  const AppView({super.key});
+  final String defaultLanguageCode;
+  const AppView({super.key, required this.defaultLanguageCode});
 
   @override
   Widget build(BuildContext context) {
+    AppLocale appLocale = AppLocale(Locale(defaultLanguageCode));
+    appLocale.loadLang();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: BlocBuilder<AuthenticationBloc , AuthenticationState>(
@@ -23,6 +26,7 @@ class AppView extends StatelessWidget {
           }
         },
       ),
+      locale: Locale(defaultLanguageCode),
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

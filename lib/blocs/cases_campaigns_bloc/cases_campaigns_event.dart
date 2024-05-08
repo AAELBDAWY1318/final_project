@@ -57,4 +57,19 @@ class GetStudentsCasesEvent extends CasesCampaignsEvent{}
 
 class GetDebtorsCasesEvent extends CasesCampaignsEvent{}
 
+class RemoveCampaignEvent extends CasesCampaignsEvent{
+  final CampaignModel campaignModel;
+
+  const RemoveCampaignEvent({required this.campaignModel});
+
+}
+
+class EditCampaignEvent extends CasesCampaignsEvent{
+  final CampaignModel campaignModel;
+
+  const EditCampaignEvent({required this.campaignModel});
+}
+
+class GetCompletedCases extends CasesCampaignsEvent{}
+
 

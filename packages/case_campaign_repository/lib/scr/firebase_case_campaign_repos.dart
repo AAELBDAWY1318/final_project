@@ -140,26 +140,30 @@ class FirebaseCaseCampaignRepository implements CaseCampaignRepository {
           if (element.data() != null) {
             CampaignEntity campaignEntity = CampaignEntity.fromDocument(
                 element.data() as Map<String, dynamic>);
-            CampaignModel campaignModel = CampaignModel.fromEntity(campaignEntity);
+            CampaignModel campaignModel =
+                CampaignModel.fromEntity(campaignEntity);
             list.add(campaignModel);
           }
         });
       });
-    }catch (e){
+    } catch (e) {
       log(e.toString());
     }
     return list;
   }
 
   @override
-  Future<List<CaseModel>> getDebtorsCases() async{
+  Future<List<CaseModel>> getDebtorsCases() async {
     List<CaseModel> list = [];
     try {
-      await casesCollection.where("category" , isEqualTo: "Debtors").get().then((value) {
+      await casesCollection
+          .where("category", isEqualTo: "Debtors")
+          .get()
+          .then((value) {
         value.docs.forEach((element) {
           if (element.data() != null) {
             CaseEntity caseEntity =
-            CaseEntity.fromDocument(element.data() as Map<String, dynamic>);
+                CaseEntity.fromDocument(element.data() as Map<String, dynamic>);
             CaseModel caseModel = CaseModel.fromEntity(caseEntity);
             list.add(caseModel);
           }
@@ -174,14 +178,17 @@ class FirebaseCaseCampaignRepository implements CaseCampaignRepository {
   }
 
   @override
-  Future<List<CaseModel>> getPoorCases() async{
+  Future<List<CaseModel>> getPoorCases() async {
     List<CaseModel> list = [];
     try {
-      await casesCollection.where("category" , isEqualTo: "Poor").get().then((value) {
+      await casesCollection
+          .where("category", isEqualTo: "Poor")
+          .get()
+          .then((value) {
         value.docs.forEach((element) {
           if (element.data() != null) {
             CaseEntity caseEntity =
-            CaseEntity.fromDocument(element.data() as Map<String, dynamic>);
+                CaseEntity.fromDocument(element.data() as Map<String, dynamic>);
             CaseModel caseModel = CaseModel.fromEntity(caseEntity);
             list.add(caseModel);
           }
@@ -196,14 +203,17 @@ class FirebaseCaseCampaignRepository implements CaseCampaignRepository {
   }
 
   @override
-  Future<List<CaseModel>> getStudentsCases()async {
+  Future<List<CaseModel>> getStudentsCases() async {
     List<CaseModel> list = [];
     try {
-      await casesCollection.where("category" , isEqualTo: "Students").get().then((value) {
+      await casesCollection
+          .where("category", isEqualTo: "Students")
+          .get()
+          .then((value) {
         value.docs.forEach((element) {
           if (element.data() != null) {
             CaseEntity caseEntity =
-            CaseEntity.fromDocument(element.data() as Map<String, dynamic>);
+                CaseEntity.fromDocument(element.data() as Map<String, dynamic>);
             CaseModel caseModel = CaseModel.fromEntity(caseEntity);
             list.add(caseModel);
           }
@@ -218,14 +228,17 @@ class FirebaseCaseCampaignRepository implements CaseCampaignRepository {
   }
 
   @override
-  Future<List<CaseModel>> getWidowsCases() async{
+  Future<List<CaseModel>> getWidowsCases() async {
     List<CaseModel> list = [];
     try {
-      await casesCollection.where("category" , isEqualTo: "Widows").get().then((value) {
+      await casesCollection
+          .where("category", isEqualTo: "Widows")
+          .get()
+          .then((value) {
         value.docs.forEach((element) {
           if (element.data() != null) {
             CaseEntity caseEntity =
-            CaseEntity.fromDocument(element.data() as Map<String, dynamic>);
+                CaseEntity.fromDocument(element.data() as Map<String, dynamic>);
             CaseModel caseModel = CaseModel.fromEntity(caseEntity);
             list.add(caseModel);
           }
@@ -234,6 +247,63 @@ class FirebaseCaseCampaignRepository implements CaseCampaignRepository {
         log(e.toString());
       });
     } catch (e) {
+      log(e.toString());
+    }
+    return list;
+  }
+
+  @override
+  Future<void> deleteCampaign(CampaignModel campaignModel) async {
+    String url = campaignModel.photo; // get image url
+    var imageRef =
+        storage.refFromURL(url); // create reference to image from URL
+    try {
+      QuerySnapshot querySnapshot = await campaignCollection
+          .where('photo', isEqualTo: campaignModel.photo)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        DocumentReference docRef = querySnapshot.docs.first.reference;
+        await docRef.delete();
+        await imageRef.delete();
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  @override
+  Future<void> editCampaign(CampaignModel campaignModel) async {
+    try {
+      QuerySnapshot querySnapshot = await campaignCollection
+          .where("photo", isEqualTo: campaignModel.photo)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        DocumentReference docRef = querySnapshot.docs.first.reference;
+        await docRef.update(campaignModel.toEntity().toDocument());
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  @override
+  Future<List<CaseModel>> getCompleteCases() async{
+    List<CaseModel> list = [];
+    try{
+      await casesCollection.get().then((value) {
+        value.docs.forEach((element) {
+          if(element.data() != null){
+            CaseEntity caseEntity = CaseEntity.fromDocument(element.data() as Map<String , dynamic>);
+            CaseModel caseModel = CaseModel.fromEntity(caseEntity);
+            double allAmount = double.parse(caseModel.allAmount);
+            double collectedAmount = double.parse(caseModel.getAmount);
+            if(allAmount == collectedAmount){
+              list.add(caseModel);
+            }
+          }
+        });
+      });
+    }catch(e){
       log(e.toString());
     }
     return list;

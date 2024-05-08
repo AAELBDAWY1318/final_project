@@ -6,7 +6,10 @@ import 'package:charity/widgets/back_compoent.dart';
 import 'package:charity/widgets/camera_component.dart';
 import 'package:charity/widgets/default_material_button.dart';
 import 'package:charity/widgets/default_text_form_field.dart';
+import 'package:charity/widgets/failure_dialog.dart';
+import 'package:charity/widgets/loading_dialog.dart';
 import 'package:charity/widgets/second_default_text.dart';
+import 'package:charity/widgets/success_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -31,85 +34,39 @@ class AddCampaignScreen extends StatelessWidget {
             showDialog(
               context: context,
               builder: (context){
-                return AlertDialog(
-                  content: CircularProgressIndicator(
-                    color: MyColors.myBlue,
-                  ),
-                );
+                return const LoadingDialog();
               },
             );
           }else if(state is AddCampaignFailure){
             showDialog(
               context: context,
               builder: (context){
-                return AlertDialog(
-                  content: Image.asset('assets/images/failure.png'),
-                  actions: [
-                    TextButton(
-                      child:
-                      Text(getLang(context, "OK")!),
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                );
+                return FailureDialog(onPressed: (){
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                });
               },
             );
           }else if(state is AddCampaignSuccess){
+            Navigator.pop(context);
             showDialog(
               context: context,
               builder: (context){
-                return AlertDialog(
-                  content: Image.asset('assets/images/success.png'),
-                  actions: [
-                    TextButton(
-                      child:
-                      Text(getLang(context, "OK")!),
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                );
+                return SuccessDialog(onPressed: (){
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+
+                });
               },
             );
           }else if(state is AddCampaignFailureNetwork){
             showDialog(
               context: context,
               builder: (context){
-                return AlertDialog(
-                  content: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(child: Image.asset('assets/images/failure.png')),
-                        Expanded(
-                          child: Text(
-                            getLang(context, "internet")!,
-                            style: const TextStyle(
-                              color: Colors.red,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.0,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  actions: [
-                    TextButton(
-                      child:
-                      Text(getLang(context, "OK")!),
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                );
+                return FailureDialog(onPressed: (){
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                });
               },
             );
           }
@@ -177,6 +134,7 @@ class AddCampaignScreen extends StatelessWidget {
                           height: 10.0,
                         ),
                         DefaultTextFormField(
+                          keyboardType: TextInputType.number,
                           controller: moneyController,
                           label: getLang(context, "money")!,
                           icon: Icons.money_off,

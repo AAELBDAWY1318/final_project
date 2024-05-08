@@ -1,3 +1,4 @@
+import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/constant/my_colors.dart';
 import 'package:charity/size.dart';
 import 'package:charity/widgets/my_custom_conditional_builder.dart';
@@ -31,6 +32,33 @@ class CampaignOrCaseUpperComponent extends StatelessWidget {
                   height:sizeConfig.screenHeight! * 0.3,
                   width: double.infinity,
                   fit: BoxFit.cover,
+                  errorBuilder: (BuildContext context, Object error,
+                      StackTrace? stackTrace) {
+                    // Return an asset image as a fallback when the network image fails
+                    return Container(
+                      padding: const EdgeInsets.all(20.0, ),
+                      height: sizeConfig.screenHeight! * 0.2,
+                      width: sizeConfig.screenWidth! * 0.95,
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            'assets/images/wifi.png',
+                          ),
+                          Expanded(
+                            child: Text(
+                              getLang(context, "connection")!,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ) : const SizedBox(),
                 whenFalseCondition:imagePath != null ? Image.asset(
                   imagePath!,

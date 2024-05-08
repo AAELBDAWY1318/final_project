@@ -1,7 +1,7 @@
+import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/blocs/request_bloc/request_bloc.dart';
-import 'package:charity/constant/my_colors.dart';
 import 'package:charity/screens/request_details_screen/request_details_screen.dart';
-import 'package:charity/size.dart';
+import 'package:charity/widgets/animated_loading.dart';
 import 'package:charity/widgets/case_ticket.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,11 +19,8 @@ class BrowseRequests extends StatelessWidget {
       child:BlocBuilder<RequestBloc, RequestState>(
         builder: (context, state){
           if(state is GetRealRequestsProcess){
-            return Center(
-              child: CircularProgressIndicator(
-                color: MyColors.myBlue,
-
-              ),
+            return const Center(
+              child: LoadingAnimation(),
             );
           }else if(state is GetRealRequestsSuccess){
             return buildSuccessCase(state.list, context);
@@ -37,7 +34,6 @@ class BrowseRequests extends StatelessWidget {
 
   //build success loaded data method
   Widget buildSuccessCase(List<Request> requests , BuildContext context){
-    SizeConfig sizeConfig = SizeConfig()..init(context);
     if(requests.isNotEmpty){
       return ListView.separated(
         itemCount: requests.length,
@@ -59,10 +55,26 @@ class BrowseRequests extends StatelessWidget {
       );
     }else{
       return Center(
-        child: Image.asset(
-          'assets/images/empty.png',
-          fit: BoxFit.cover,
-          width: sizeConfig.screenWidth! *0.3,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/empty-box.png',
+              height: 100,
+              width: 100,
+            ),
+            const SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              getLang(context, "empty")!,
+              style: const TextStyle(
+                color: Colors.grey,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
       );
     }

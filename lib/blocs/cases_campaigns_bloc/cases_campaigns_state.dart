@@ -97,3 +97,20 @@ class GetDebtorsCasesSuccess extends CasesCampaignsState{
   const GetDebtorsCasesSuccess({required this.list});
 
 }
+
+class RemoveCampaignProcess extends CasesCampaignsState{}
+class RemoveCampaignSuccess extends CasesCampaignsState{}
+class RemoveCampaignFailure extends CasesCampaignsState{}
+
+class EditCampaignProcess extends CasesCampaignsState{}
+class EditCampaignSuccess extends CasesCampaignsState{}
+class EditCampaignFailure extends CasesCampaignsState{}
+
+class GetCompletedCasesProcess extends CasesCampaignsState{}
+class GetCompletedCasesSuccess extends CasesCampaignsState{
+  final List<CaseModel> list ;
+
+  const GetCompletedCasesSuccess({required this.list});
+
+}
+class GetCompletedCasesFailure extends CasesCampaignsState{}
