@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PayMobIFrame extends StatefulWidget {
-  const PayMobIFrame({super.key});
+  final String paymentKey;
+  const PayMobIFrame({super.key, required this.paymentKey});
 
   @override
   State<PayMobIFrame> createState() => _PayMobIFrameState();
@@ -13,15 +16,21 @@ class _PayMobIFrameState extends State<PayMobIFrame> {
   @override
   void initState() {
     super.initState();
+    log("IFrame:+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    log(widget.paymentKey);
     controller = WebViewController()
       ..loadRequest(
-        Uri.parse('https://flutter.dev'),
+          Uri.parse("https://accept.paymob.com/api/acceptance/iframes/844976?payment_token=${widget.paymentKey}"),
       );
   }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: WebViewWidget(controller: controller),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: WebViewWidget(controller: controller),
+      ),
     );
   }
 }

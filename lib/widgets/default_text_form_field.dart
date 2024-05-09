@@ -55,7 +55,7 @@ class DefaultTextFormField extends StatelessWidget {
         validator: validator, // Validator function is now nullable
         controller: controller,
         obscureText: secure?? false,
-        keyboardType: keyboardType ?? TextInputType.text,
+        keyboardType: keyboardType ?? TextInputType.emailAddress,
       ),
     );
   }

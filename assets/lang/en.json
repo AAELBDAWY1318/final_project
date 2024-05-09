@@ -89,5 +89,8 @@
   "lang": "Select Language",
   "connection": "Check Your Internet Connection",
   "amount": "Enter your donation amount",
-  "invalid": "The amount must be number"
+  "invalid": "The amount must be number",
+  "first": "first name",
+  "second": "second name",
+  "invalid phone": "Invalid phone number"
 }
