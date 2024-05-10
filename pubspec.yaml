@@ -46,6 +46,8 @@ dependencies:
     path: packages/request_repository
   case_campaign_repository:
     path: packages/case_campaign_repository
+  donation_repository:
+    path: packages/donation_repository
   bloc: ^8.1.4
   flutter_bloc: ^8.1.4
   equatable: ^2.0.5
@@ -59,7 +61,8 @@ dependencies:
   shared_preferences: ^2.2.3
   flutter_native_splash: ^2.4.0
   dio: ^5.4.3+1
-  webview_flutter: ^4.7.0
+  webview_flutter: ^3.0.4
+
 
 dev_dependencies:
   flutter_test:

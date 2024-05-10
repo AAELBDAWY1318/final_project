@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:charity/appview.dart';
 import 'package:charity/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:charity/dio_helper/dio_helper.dart';
 import 'package:charity/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -13,6 +14,7 @@ import 'package:user_repository/scr/user_repos.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized(); // ensure that every thing initialized
+  await DioHelper.init();
   // get instance from shared preference
   SharedPreferences prefs = await SharedPreferences.getInstance();
   // initialize default language code if it null by default it will be english

@@ -92,5 +92,7 @@
   "invalid": "The amount must be number",
   "first": "first name",
   "second": "second name",
-  "invalid phone": "Invalid phone number"
+  "invalid phone": "Invalid phone number",
+  "thanks": "Allah is with the servant as long as the servant is with his brother.",
+  "make report": "Making Report, please waiting..."
 }

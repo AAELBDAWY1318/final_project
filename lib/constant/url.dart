@@ -1,5 +1,0 @@
-class URLs {
-  static const String apiKey =
-      "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2T1RjMU16Z3hMQ0p1WVcxbElqb2lhVzVwZEdsaGJDSjkuZHZpZHBWTXI2akFyRnloek5TaU5maFh5YW5uT2piSzlvWnFVdnJyRXRUQXFuU3N2QnF6MFdQZG5QbXd0Wlc0RW1qNHF6cFhEakYzeVV4bGNlOENsYWc=";
-  static const String cardPaymentMethodIntegrationId = "4571272";
-}

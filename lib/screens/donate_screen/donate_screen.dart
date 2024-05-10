@@ -1,7 +1,5 @@
-import 'dart:developer';
-
 import 'package:charity/app_locale/app_locale.dart';
-import 'package:charity/blocs/payment_donation_bloc/payment_donation_bloc.dart';
+import 'package:charity/blocs/payment_donations_bloc/payment_donations_bloc.dart';
 import 'package:charity/constant/my_colors.dart';
 import 'package:charity/screens/paymob_iframe/paymob_iframe.dart';
 import 'package:charity/size.dart';
@@ -9,6 +7,7 @@ import 'package:charity/widgets/default_material_button.dart';
 import 'package:charity/widgets/default_text_form_field.dart';
 import 'package:charity/widgets/failure_dialog.dart';
 import 'package:charity/widgets/loading_dialog.dart';
+import 'package:charity/widgets/snackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,32 +23,37 @@ class DonateScreen extends StatelessWidget {
     TextEditingController lastController = TextEditingController();
     TextEditingController emailController = TextEditingController();
     TextEditingController phoneController = TextEditingController();
-    return BlocProvider<PaymentDonationBloc>(
-      create: (context) => PaymentDonationBloc(),
-      child: BlocConsumer<PaymentDonationBloc, PaymentDonationState>(
+    return BlocProvider<PaymentDonationsBloc>(
+      create: (context) => PaymentDonationsBloc()
+        ..add(
+          GetAuthTokenEvent(),
+        ),
+      child: BlocConsumer<PaymentDonationsBloc, PaymentDonationsState>(
         listener: (context, state) {
-          if(state is GetPaymentKeyProcess){
-            showDialog(context: context,
-              builder: (context){
-              return const LoadingDialog();
-              }
-            );
-          }else if (state is GetPaymentKeyFailure){
+          if (State is GetPaymentKeyProcess) {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return const LoadingDialog();
+                });
+          }else if(state is GetPaymentKeyFailure){
             Navigator.pop(context);
-            showDialog(context: context,
-                builder: (context){
+            showDialog(
+                context: context,
+                builder: (context) {
                   return FailureDialog(onPressed: (){
                     Navigator.pop(context);
                   });
-                }
-            );
+                });
           }else if(state is GetPaymentKeySuccess){
-            log(state.paymentKey);
-            Navigator.pop(context);
+            String url = state.visaUrl;
+            showSnackBar(
+              context: context,
+              text: getLang(context, "success")!,
+              color: Colors.green,
+            );
             Navigator.push(context,
-              MaterialPageRoute(builder: (context){
-                return PayMobIFrame(paymentKey: state.paymentKey);
-              }),
+              MaterialPageRoute(builder: (context)=>PayMobIFrame(visaUrl: url,)),
             );
           }
         },
@@ -174,14 +178,14 @@ class DonateScreen extends StatelessWidget {
                       text: getLang(context, "Continue")!,
                       function: () {
                         if (formKey.currentState!.validate()) {
-                          context.read<PaymentDonationBloc>().add(
-                              GetPaymentKeyEvent(
-                                  amount: int.parse(amountController.text),
-                                  currency: "EGP",
-                                  email: emailController.text,
-                                  phone: phoneController.text,
-                                  firstName: firstController.text,
-                                  lastName: lastController.text));
+                          context.read<PaymentDonationsBloc>().add(
+                                GetPaymentKeyEvent(
+                                    firstName: firstController.text,
+                                    lastName: lastController.text,
+                                    email: emailController.text,
+                                    phone: phoneController.text,
+                                    amount: int.parse(amountController.text)),
+                              );
                         }
                       },
                     ),
