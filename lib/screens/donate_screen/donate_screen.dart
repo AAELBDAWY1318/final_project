@@ -8,11 +8,13 @@ import 'package:charity/widgets/default_text_form_field.dart';
 import 'package:charity/widgets/failure_dialog.dart';
 import 'package:charity/widgets/loading_dialog.dart';
 import 'package:charity/widgets/snackBar.dart';
+import 'package:donation_repository/donation_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DonateScreen extends StatelessWidget {
-  const DonateScreen({super.key});
+  final String category, caseId;
+  const DonateScreen({super.key, this.category = '', this.caseId = '-'});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class DonateScreen extends StatelessWidget {
     TextEditingController emailController = TextEditingController();
     TextEditingController phoneController = TextEditingController();
     return BlocProvider<PaymentDonationsBloc>(
-      create: (context) => PaymentDonationsBloc()
+      create: (context) => PaymentDonationsBloc(FirebaseDonationRepository())
         ..add(
           GetAuthTokenEvent(),
         ),
@@ -36,24 +38,39 @@ class DonateScreen extends StatelessWidget {
                 builder: (context) {
                   return const LoadingDialog();
                 });
-          }else if(state is GetPaymentKeyFailure){
+          } else if (state is GetPaymentKeyFailure) {
             Navigator.pop(context);
             showDialog(
                 context: context,
                 builder: (context) {
-                  return FailureDialog(onPressed: (){
+                  return FailureDialog(onPressed: () {
                     Navigator.pop(context);
                   });
                 });
-          }else if(state is GetPaymentKeySuccess){
+          } else if (state is GetPaymentKeySuccess) {
             String url = state.visaUrl;
+            DonationModel donationModel = DonationModel(
+                userId: '',
+                caseId: caseId,
+                donationAmount: amountController.text,
+                managementCost:
+                    (double.parse(amountController.text) * 0.05).toString(),
+                category: category.isEmpty? "All" : category,
+              date: '',
+              time: '',
+            );
             showSnackBar(
               context: context,
               text: getLang(context, "success")!,
               color: Colors.green,
             );
-            Navigator.push(context,
-              MaterialPageRoute(builder: (context)=>PayMobIFrame(visaUrl: url,)),
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PayMobIFrame(
+                        visaUrl: url,
+                        donationModel: donationModel,
+                      )),
             );
           }
         },

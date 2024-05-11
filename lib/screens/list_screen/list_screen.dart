@@ -8,6 +8,7 @@ import 'package:charity/screens/apply_request/apply_request.dart';
 import 'package:charity/screens/ask_about_request/ask_about_request_screen.dart';
 import 'package:charity/screens/change_language/change_language_screen.dart';
 import 'package:charity/screens/dashboard_screen/dashboard_screen.dart';
+import 'package:charity/screens/donation_reports_screen/donation_report_screen.dart';
 import 'package:charity/screens/login/login.dart';
 import 'package:charity/screens/logout/logout.dart';
 import 'package:charity/screens/suggestion/suggestion.dart';
@@ -138,7 +139,12 @@ class ListScreen extends StatelessWidget {
       ),
       ListComponent(
         text: getLang(context, 'my donation reports')!,
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const DonationReportsScreen()),
+          );
+        },
       ),
       ListComponent(
         text: getLang(context, 'dashboard')!,

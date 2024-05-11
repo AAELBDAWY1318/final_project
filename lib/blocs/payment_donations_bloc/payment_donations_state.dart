@@ -19,3 +19,16 @@ class GetPaymentKeySuccess extends PaymentDonationsState{
   const GetPaymentKeySuccess({required this.visaUrl});
 }
 class GetPaymentKeyFailure extends PaymentDonationsState{}
+
+class SetDonationReportProcess extends PaymentDonationsState{}
+class SetDonationReportSuccess extends PaymentDonationsState{}
+class SetDonationReportFailure extends PaymentDonationsState{}
+
+class GetDonationsProcess extends PaymentDonationsState{}
+class GetDonationsFailure extends PaymentDonationsState{}
+class GetDonationsSuccess extends PaymentDonationsState{
+  final List<DonationModel> list ;
+
+  const GetDonationsSuccess({required this.list});
+}
+

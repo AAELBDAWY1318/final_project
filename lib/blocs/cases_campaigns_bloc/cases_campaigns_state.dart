@@ -114,3 +114,13 @@ class GetCompletedCasesSuccess extends CasesCampaignsState{
 
 }
 class GetCompletedCasesFailure extends CasesCampaignsState{}
+
+class GetCampaignFormUrlProcess extends CasesCampaignsState{}
+class GetCampaignFormUrlFailure extends CasesCampaignsState{}
+class GetCampaignFormUrlSuccess extends CasesCampaignsState{
+  final CampaignModel campaignModel;
+
+  const GetCampaignFormUrlSuccess({required this.campaignModel});
+
+}
+

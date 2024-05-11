@@ -12,6 +12,8 @@ abstract class CaseCampaignRepository {
 
   Future<CaseModel> searchViaNationalId(String caseId);
 
+  Future<CampaignModel> searchForCampaign(String url);
+
   Future<void> addCampaign(CampaignModel campaignModel);
 
   Future<List<CampaignModel>> getCampaigns();

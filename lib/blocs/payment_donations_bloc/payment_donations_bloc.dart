@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:charity/paymob_manager/paymob_manager.dart';
+import 'package:donation_repository/scr/donation_repos.dart';
+import 'package:donation_repository/scr/models/donation_model.dart';
 import 'package:equatable/equatable.dart';
 
 part 'payment_donations_event.dart';
@@ -9,7 +11,8 @@ part 'payment_donations_state.dart';
 
 class PaymentDonationsBloc
     extends Bloc<PaymentDonationsEvent, PaymentDonationsState> {
-  PaymentDonationsBloc() : super(PaymentDonationsInitial()) {
+  final DonationRepository donationRepository ;
+  PaymentDonationsBloc(this.donationRepository) : super(PaymentDonationsInitial()) {
     on<GetAuthTokenEvent>((event, emit) async {
       try {
         emit(GetAuthTokenProcess());
@@ -33,6 +36,26 @@ class PaymentDonationsBloc
       } catch (e) {
         log(e.toString());
         emit(GetPaymentKeyFailure());
+      }
+    });
+    on<SetDonationReport>((event, emit) async{
+      try{
+        emit(SetDonationReportProcess());
+        await donationRepository.setDonation(event.donationModel);
+        emit(SetDonationReportSuccess());
+      }catch(e){
+        log(e.toString());
+        emit(SetDonationReportFailure());
+      }
+    });
+    on<GetDonationsEvent>((event, emit) async{
+      try{
+        emit(GetDonationsProcess());
+        List<DonationModel>list = await donationRepository.getDonationReports();
+        emit(GetDonationsSuccess(list: list));
+      }catch(e){
+        log(e.toString());
+        emit(GetDonationsFailure());
       }
     });
   }

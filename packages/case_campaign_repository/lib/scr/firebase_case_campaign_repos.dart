@@ -287,26 +287,54 @@ class FirebaseCaseCampaignRepository implements CaseCampaignRepository {
   }
 
   @override
-  Future<List<CaseModel>> getCompleteCases() async{
+  Future<List<CaseModel>> getCompleteCases() async {
     List<CaseModel> list = [];
-    try{
+    try {
       await casesCollection.get().then((value) {
         value.docs.forEach((element) {
-          if(element.data() != null){
-            CaseEntity caseEntity = CaseEntity.fromDocument(element.data() as Map<String , dynamic>);
+          if (element.data() != null) {
+            CaseEntity caseEntity =
+                CaseEntity.fromDocument(element.data() as Map<String, dynamic>);
             CaseModel caseModel = CaseModel.fromEntity(caseEntity);
             double allAmount = double.parse(caseModel.allAmount);
             double collectedAmount = double.parse(caseModel.getAmount);
-            if(allAmount == collectedAmount){
+            if (allAmount == collectedAmount) {
               list.add(caseModel);
             }
           }
         });
       });
-    }catch(e){
+    } catch (e) {
       log(e.toString());
     }
     return list;
   }
 
+  @override
+  Future<CampaignModel> searchForCampaign(String url) async {
+    CampaignModel campaignModel = const CampaignModel(
+      collectedAmount: '',
+      photo: '',
+      allAmount: '',
+      description: '',
+      title: '',
+    );
+    try {
+      QuerySnapshot querySnapshot =
+          await campaignCollection.where("photo", isEqualTo: url).get();
+      if (querySnapshot.docs.isNotEmpty) {
+        if(querySnapshot.docs.first.exists){
+          CampaignEntity entity = CampaignEntity.fromDocument(
+              querySnapshot.docs.first.data() as Map<String, dynamic>);
+          campaignModel = CampaignModel.fromEntity(entity);
+          return campaignModel;
+        }else {
+          return campaignModel;
+        }
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return campaignModel;
+  }
 }

@@ -93,6 +93,13 @@
   "first": "first name",
   "second": "second name",
   "invalid phone": "Invalid phone number",
+  "at": "Donation at ",
   "thanks": "Allah is with the servant as long as the servant is with his brother.",
-  "make report": "Making Report, please waiting..."
+  "make report": "Making Report, please waiting...",
+  "donate for": "You are donate for ",
+  "date": "Date",
+  "time": "Time",
+  "donation amount": "Donation Amount",
+  "cost": "Management cost",
+  "donate to": "Donate for..."
 }

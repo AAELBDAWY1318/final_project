@@ -72,4 +72,11 @@ class EditCampaignEvent extends CasesCampaignsEvent{
 
 class GetCompletedCases extends CasesCampaignsEvent{}
 
+class GetCampaignFormUrl extends CasesCampaignsEvent{
+  final String url;
+
+  const GetCampaignFormUrl({required this.url});
+
+}
+
 

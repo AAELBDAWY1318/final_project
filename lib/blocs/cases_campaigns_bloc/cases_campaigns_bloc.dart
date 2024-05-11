@@ -164,6 +164,16 @@ class CasesCampaignsBloc extends Bloc<CasesCampaignsEvent, CasesCampaignsState> 
         emit(GetCompletedCasesFailure());
       }
     });
+    on<GetCampaignFormUrl>((event, emit) async{
+      try{
+        emit(GetCampaignFormUrlProcess());
+        CampaignModel campaignModel = await caseCampaignRepository.searchForCampaign(event.url);
+        emit(GetCampaignFormUrlSuccess(campaignModel: campaignModel));
+      }catch(e){
+        log(e.toString());
+        emit(GetCampaignFormUrlFailure());
+      }
+    });
   }
   @override
   Future<void> close() async {

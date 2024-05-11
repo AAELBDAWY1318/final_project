@@ -1,5 +1,6 @@
 import 'package:case_campaign_repository/case_campaign_repository.dart';
 import 'package:charity/constant/my_colors.dart';
+import 'package:charity/screens/donate_screen/donate_screen.dart';
 import 'package:charity/widgets/campaign_case_upper_component.dart';
 import 'package:charity/widgets/default_material_button.dart';
 import 'package:charity/widgets/second_default_text.dart';
@@ -81,7 +82,17 @@ class CaseDonorView extends StatelessWidget {
               text: getLang(context, "donate")!,
               buttonColor: MyColors.myBlue,
               textColor: Colors.white,
-              function: (){},
+              function: (){
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context)=>Scaffold(
+                    backgroundColor: Colors.white,
+                    body: DonateScreen(
+                      category: caseModel.category,
+                      caseId: caseModel.caseId,
+                    ),
+                  )),
+                );
+              },
             ),
           ],
         ),

@@ -18,3 +18,11 @@ class GetPaymentKeyEvent extends PaymentDonationsEvent {
       required this.phone,
       required this.amount});
 }
+
+class SetDonationReport extends PaymentDonationsEvent{
+  final DonationModel donationModel;
+
+  const SetDonationReport({required this.donationModel});
+}
+
+class GetDonationsEvent extends PaymentDonationsEvent{}

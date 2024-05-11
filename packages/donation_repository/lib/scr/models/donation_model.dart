@@ -8,6 +8,8 @@ class DonationModel extends Equatable {
   final String donationAmount;
   final String managementCost;
   final String category;
+  final String date ;
+  final String time ;
 
   const DonationModel({
     required this.userId,
@@ -15,6 +17,8 @@ class DonationModel extends Equatable {
     required this.donationAmount,
     required this.managementCost,
     required this.category,
+    required this.time,
+    required this.date,
   });
 
   static DonationModel fromEntity(DonationEntity entity) {
@@ -24,6 +28,8 @@ class DonationModel extends Equatable {
       donationAmount: entity.donationAmount,
       managementCost: entity.managementCost,
       category: entity.category,
+      date: entity.date,
+      time: entity.time,
     );
   }
 
@@ -34,11 +40,15 @@ class DonationModel extends Equatable {
       donationAmount: donationAmount,
       caseId: caseId,
       userId: userId,
+      time: time ,
+      date: date,
     );
   }
 
   DonationModel editUserId({
     String? userId,
+    String? time,
+    String ? date,
   }) {
     return DonationModel(
       userId: userId ?? this.userId,
@@ -46,10 +56,12 @@ class DonationModel extends Equatable {
       donationAmount: donationAmount,
       managementCost: managementCost,
       category: category,
+      date: date ?? this.date ,
+      time: time ?? this.time,
     );
   }
 
   @override
   List<Object?> get props =>
-      [userId, caseId, donationAmount, managementCost, category];
+      [time , date , userId, caseId, donationAmount, managementCost, category];
 }

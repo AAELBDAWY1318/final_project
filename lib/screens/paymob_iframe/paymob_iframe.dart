@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:charity/layout/app_layout.dart';
 import 'package:charity/screens/donate_screen/thank_you_view.dart';
+import 'package:donation_repository/donation_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:io';
@@ -8,7 +9,8 @@ import 'dart:async';
 
 class PayMobIFrame extends StatefulWidget {
   final String visaUrl;
-  const PayMobIFrame({super.key, required this.visaUrl});
+  final DonationModel donationModel;
+  const PayMobIFrame({super.key, required this.visaUrl, required this.donationModel});
 
   @override
   State<PayMobIFrame> createState() => _PayMobIFrameState();
@@ -72,7 +74,9 @@ class _PayMobIFrameState extends State<PayMobIFrame> {
             if (url.contains('data.message=Approved')){
               Navigator.pushAndRemoveUntil(context,
                   MaterialPageRoute(builder: (context){
-                    return const ThankYouView();
+                    return  ThankYouView(
+                      donationModel: widget.donationModel,
+                    );
                   }), (route) => false);
             }
           },
