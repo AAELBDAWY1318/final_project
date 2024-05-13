@@ -2,7 +2,6 @@ import 'package:case_campaign_repository/case_campaign_repository.dart';
 import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/blocs/cases_campaigns_bloc/cases_campaigns_bloc.dart';
 import 'package:charity/constant/my_colors.dart';
-import 'package:charity/screens/add_campaign_screen/add_campaign_screen.dart';
 import 'package:charity/screens/edit_campaign_screen/edit_campaign_screen.dart';
 import 'package:charity/widgets/back_compoent.dart';
 import 'package:charity/widgets/default_material_button.dart';
@@ -28,11 +27,11 @@ class CampaignAdminView extends StatelessWidget {
       child: BlocConsumer<CasesCampaignsBloc, CasesCampaignsState>(
         listener: (context, state) {
           if (state is RemoveCampaignSuccess) {
+            Navigator.pop(context);
             showDialog(
                 context: context,
                 builder: (context) {
                   return SuccessDialog(onPressed: () {
-                    Navigator.pop(context);
                     Navigator.pop(context);
                     Navigator.pop(context);
                     Navigator.pop(context);

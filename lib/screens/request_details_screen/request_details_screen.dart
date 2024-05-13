@@ -1,12 +1,14 @@
 import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/blocs/request_bloc/request_bloc.dart';
-import 'package:charity/constant/my_colors.dart';
 import 'package:charity/screens/add_new_case_screen/add_new_case_screen.dart';
 import 'package:charity/widgets/back_compoent.dart';
 import 'package:charity/widgets/default_material_button.dart';
 import 'package:charity/widgets/details_component.dart';
+import 'package:charity/widgets/failure_dialog.dart';
+import 'package:charity/widgets/loading_dialog.dart';
 import 'package:charity/widgets/second_default_text.dart';
 import 'package:charity/widgets/show_image_component.dart';
+import 'package:charity/widgets/success_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:request_repository/request_repository.dart';
@@ -28,11 +30,7 @@ class RequestDetailsScreen extends StatelessWidget {
             showDialog(
               context: context,
               builder: (context){
-                return AlertDialog(
-                  content: CircularProgressIndicator(
-                    color: MyColors.myBlue,
-                  ),
-                );
+                return const LoadingDialog();
               }
             );
           }else if(state is RefuseRequestFailure){
@@ -40,16 +38,10 @@ class RequestDetailsScreen extends StatelessWidget {
             showDialog(
                 context: context,
                 builder: (context){
-                  return AlertDialog(
-                    content: Image.asset('assets/images/failure.png'),
-                    actions: [
-                      TextButton(
-                        onPressed: (){
-                          Navigator.pop(context);
-                        },
-                        child: Text(getLang(context, "OK")!),
-                      ),
-                    ],
+                  return FailureDialog(
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },
                   );
                 }
             );
@@ -58,17 +50,11 @@ class RequestDetailsScreen extends StatelessWidget {
             showDialog(
                 context: context,
                 builder: (context){
-                  return AlertDialog(
-                    content: Image.asset('assets/images/success.png'),
-                    actions: [
-                      TextButton(
-                        onPressed: (){
-                          Navigator.pop(context); // pop dialog
-                          Navigator.pop(context); // pop details screen
-                        },
-                        child: Text(getLang(context, "OK")!),
-                      ),
-                    ],
+                  return SuccessDialog(
+                    onPressed: (){
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    },
                   );
                 }
             );

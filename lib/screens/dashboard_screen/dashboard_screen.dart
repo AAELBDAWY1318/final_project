@@ -58,11 +58,6 @@ class DashBoardScreen extends StatelessWidget {
         },
       ),
       DashboardItem(
-        text: getLang(context, "result")!,
-        image: 'assets/images/result.png',
-        onTap: () {},
-      ),
-      DashboardItem(
         text: getLang(context, "complete cases")!,
         image: 'assets/images/complete.png',
         onTap: () {

@@ -41,22 +41,20 @@ class FirebaseDonationRepository implements DonationRepository {
           }
           await queryDocumentSnapshot.reference.update(data);
         }
-      } else if (donationModel.category.isNotEmpty) {
+      } else if (donationModel.category.length >= 4) {
         DocumentSnapshot documentSnapshot =
             await casesCollection.doc(donationModel.caseId).get();
-        if (documentSnapshot.exists) {
-          Map<String, dynamic> data =
-              documentSnapshot.data() as Map<String, dynamic>;
-          double temp = double.parse(data["getAmount"]) +
-              int.parse(donationModel.donationAmount) -
-              double.parse(donationModel.managementCost);
-          if (temp <= int.parse(data["allAmount"])) {
-            data["getAmount"] = temp.toString();
-          } else {
-            data["getAmount"] = data["allAmount"];
-          }
-          await documentSnapshot.reference.update(data);
+        Map<String, dynamic> data =
+        documentSnapshot.data() as Map<String, dynamic>;
+        double temp = double.parse(data["getAmount"]) +
+            int.parse(donationModel.donationAmount) -
+            double.parse(donationModel.managementCost);
+        if (temp <= int.parse(data["allAmount"])) {
+          data["getAmount"] = temp.toString();
+        } else {
+          data["getAmount"] = data["allAmount"];
         }
+        await documentSnapshot.reference.update(data);
       }
     } catch (e) {
       log(e.toString());

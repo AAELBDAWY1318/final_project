@@ -1,13 +1,16 @@
 import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/blocs/complaint_bloc/complaint_bloc.dart';
-import 'package:charity/constant/my_colors.dart';
 import 'package:charity/widgets/back_compoent.dart';
 import 'package:charity/widgets/default_material_button.dart';
 import 'package:charity/widgets/details_component.dart';
+import 'package:charity/widgets/failure_dialog.dart';
 import 'package:charity/widgets/second_default_text.dart';
+import 'package:charity/widgets/success_dialog.dart';
 import 'package:complaint_repository/complaint_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../widgets/loading_dialog.dart';
 
 class ComplaintSuggestionDetailsScreen extends StatelessWidget {
   final Complaint complaint;
@@ -26,53 +29,29 @@ class ComplaintSuggestionDetailsScreen extends StatelessWidget {
             showDialog(
               context: context,
               builder: (context){
-                return AlertDialog(
-                  content: CircularProgressIndicator(
-                    color: MyColors.myBlue,
-                  ),
-                );
+                return const LoadingDialog();
               }
             );
           }else if (state is RemoveComplaintFailure){
+            Navigator.pop(context);
             showDialog(
                 context: context,
                 builder: (context){
-                  return AlertDialog(
-                    content: Image.asset(
-                      'assets/images/failure.png',
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: (){
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                        },
-                        child: Text(getLang(context, "OK")!),
-                      ),
-                    ],
-                  );
+                  return FailureDialog(onPressed: (){
+                    Navigator.pop(context);
+                  });
                 }
             );
           }else if(state is RemoveComplaintSuccess){
+            Navigator.pop(context);
             showDialog(
                 context: context,
                 builder: (context){
-                  return AlertDialog(
-                    content: Image.asset(
-                      'assets/images/success.png',
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: (){
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                        },
-                        child: Text(getLang(context, "OK")!),
-                      ),
-                    ],
-                  );
+                  return SuccessDialog(onPressed: (){
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  });
                 }
             );
           }
