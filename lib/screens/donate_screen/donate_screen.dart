@@ -9,6 +9,7 @@ import 'package:charity/widgets/failure_dialog.dart';
 import 'package:charity/widgets/loading_dialog.dart';
 import 'package:charity/widgets/snackBar.dart';
 import 'package:donation_repository/donation_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,7 +26,33 @@ class DonateScreen extends StatelessWidget {
     TextEditingController lastController = TextEditingController();
     TextEditingController emailController = TextEditingController();
     TextEditingController phoneController = TextEditingController();
-    return BlocProvider<PaymentDonationsBloc>(
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    final user = firebaseAuth.currentUser;
+    return user == null ? Center(
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/log.png',
+                height: 150.0,
+              ),
+              const SizedBox(height: 10.0,),
+              Text(
+                getLang(context, "log")!,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0, 
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ),
+    ) : BlocProvider<PaymentDonationsBloc>(
       create: (context) => PaymentDonationsBloc(FirebaseDonationRepository())
         ..add(
           GetAuthTokenEvent(),
@@ -50,12 +77,12 @@ class DonateScreen extends StatelessWidget {
           } else if (state is GetPaymentKeySuccess) {
             String url = state.visaUrl;
             DonationModel donationModel = DonationModel(
-                userId: '',
-                caseId: caseId,
-                donationAmount: amountController.text,
-                managementCost:
-                    (double.parse(amountController.text) * 0.05).toString(),
-                category: category.isEmpty? "All" : category,
+              userId: '',
+              caseId: caseId,
+              donationAmount: amountController.text,
+              managementCost:
+              (double.parse(amountController.text) * 0.05).toString(),
+              category: category.isEmpty? "All" : category,
               date: '',
               time: '',
             );
@@ -68,9 +95,9 @@ class DonateScreen extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) => PayMobIFrame(
-                        visaUrl: url,
-                        donationModel: donationModel,
-                      )),
+                    visaUrl: url,
+                    donationModel: donationModel,
+                  )),
             );
           }
         },
@@ -136,7 +163,7 @@ class DonateScreen extends StatelessWidget {
                       validator: (val) {
                         // Regular expression for email validation
                         final RegExp emailRegex =
-                            RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                        RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
                         if (val!.isEmpty) {
                           return getLang(
                               context, "This field must be assigned");
@@ -196,13 +223,13 @@ class DonateScreen extends StatelessWidget {
                       function: () {
                         if (formKey.currentState!.validate()) {
                           context.read<PaymentDonationsBloc>().add(
-                                GetPaymentKeyEvent(
-                                    firstName: firstController.text,
-                                    lastName: lastController.text,
-                                    email: emailController.text,
-                                    phone: phoneController.text,
-                                    amount: int.parse(amountController.text)),
-                              );
+                            GetPaymentKeyEvent(
+                                firstName: firstController.text,
+                                lastName: lastController.text,
+                                email: emailController.text,
+                                phone: phoneController.text,
+                                amount: int.parse(amountController.text)),
+                          );
                         }
                       },
                     ),

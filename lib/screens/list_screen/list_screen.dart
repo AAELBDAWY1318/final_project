@@ -177,6 +177,7 @@ class ListScreen extends StatelessWidget {
       listComponents[0],
       listComponents[1],
       listComponents[3],
+      listComponents[6],
     ];
     // this hold only donor operations
     List<ListComponent> donorOperationList = [

@@ -1,5 +1,7 @@
 import 'package:charity/constant/my_colors.dart';
 import 'package:charity/size.dart';
+import 'package:charity/widgets/back_compoent.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UpperComponent extends StatelessWidget {
@@ -33,11 +35,11 @@ class UpperComponent extends StatelessWidget {
           width: double.infinity,
           height: sizeConfig.screenHeight! * 0.085,
           decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0),
-            )
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.0),
+                topRight: Radius.circular(30.0),
+              )
           ),
         ),
       ],

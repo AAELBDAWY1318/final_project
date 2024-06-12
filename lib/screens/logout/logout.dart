@@ -1,3 +1,4 @@
+import 'package:charity/widgets/back_compoent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:charity/app_locale/app_locale.dart';
@@ -66,33 +67,42 @@ class Logout extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          return Scaffold(
-            backgroundColor: Colors.white,
-            body: Column(
-              children: [
-                const UpperComponent(),
-                Text(
-                  getLang(context, "are U sure")!,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
+          return SafeArea(
+            child: Scaffold(
+              backgroundColor: Colors.white,
+              body: Stack(
+                children: [
+                  Column(
+                    children: [
+                      const UpperComponent(),
+                      Text(
+                        getLang(context, "are U sure")!,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                      Text(
+                        email,
+                      ),
+                      const SizedBox(height: 15.0,),
+                      DefaultMaterialButton(
+                        textColor: Colors.white,
+                        buttonColor: MyColors.myBlue,
+                        text: getLang(context, 'Continue')!,
+                        function: () {
+                          context.read<SignInBloc>().add(
+                            const SignOutRequired(),
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                ),
-                Text(
-                  email,
-                ),
-                const SizedBox(height: 15.0,),
-                DefaultMaterialButton(
-                  textColor: Colors.white,
-                  buttonColor: MyColors.myBlue,
-                  text: getLang(context, 'Continue')!,
-                  function: () {
-                    context.read<SignInBloc>().add(
-                      const SignOutRequired(),
-                    );
-                  },
-                ),
-              ],
+                  const Back(
+                    color: Colors.white,
+                  ),
+                ],
+              ),
             ),
           );
         },

@@ -101,5 +101,9 @@
   "time": "Time",
   "donation amount": "Donation Amount",
   "cost": "Management cost",
-  "donate to": "Donate for..."
+  "donate to": "Donate for...",
+  "image": "Select an image",
+  "test": "Fake ID Detection",
+  "log": "We try as we can to provide reports about your donations, please help us to do this and login to complete donation",
+  "image detect": "Here you can detect if ID image is fake or real"
 }

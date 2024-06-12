@@ -4,6 +4,7 @@ import 'package:charity/screens/add_campaign_screen/add_campaign_screen.dart';
 import 'package:charity/screens/cases_screen/cases_screen.dart';
 import 'package:charity/screens/complaint_suggestion_screen/complaint_suggestion_screen.dart';
 import 'package:charity/screens/complete_case_screen/complete_cases_screen.dart';
+import 'package:charity/screens/fake_id_detection_screen/fake_id_detection_screen.dart';
 import 'package:charity/screens/manage_campaign/manage_campaign.dart';
 import 'package:charity/widgets/dashboard_item.dart';
 import 'package:charity/widgets/second_default_text.dart';
@@ -72,6 +73,15 @@ class DashBoardScreen extends StatelessWidget {
         onTap: () {
           Navigator.push(context,
             MaterialPageRoute(builder:(context)=> const ManageCampaign()),
+          );
+        },
+      ),
+      DashboardItem(
+        text: getLang(context, "test")!,
+        image: 'assets/images/ai.png',
+        onTap: () {
+          Navigator.push(context,
+            MaterialPageRoute(builder:(context)=> const FakeIdDetection()),
           );
         },
       ),

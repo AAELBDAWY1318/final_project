@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/blocs/request_bloc/request_bloc.dart';
 import 'package:charity/constant/my_colors.dart';
@@ -8,15 +11,101 @@ import 'package:charity/widgets/default_text_form_field.dart';
 import 'package:charity/widgets/failure_dialog.dart';
 import 'package:charity/widgets/loading_dialog.dart';
 import 'package:charity/widgets/second_default_text.dart';
+import 'package:charity/widgets/show_image_file.dart';
 import 'package:charity/widgets/success_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:request_repository/request_repository.dart';
 
-class ApplyRequestScreen extends StatelessWidget {
+class ApplyRequestScreen extends StatefulWidget {
   const ApplyRequestScreen({super.key});
 
+  @override
+  State<ApplyRequestScreen> createState() => _ApplyRequestScreenState();
+}
+
+class _ApplyRequestScreenState extends State<ApplyRequestScreen> {
+  String imagePath1 = '', imagePath2 = '';
+  // Function to select an image from gallery or camera
+  Future<String> _pickImage(ImageSource source) async {
+    String imagePath = '';
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: source);
+    setState(() {
+      if (pickedFile != null) {
+        imagePath = pickedFile.path;
+      }
+    });
+    return imagePath;
+  }
+
+  void showBottomSheet(BuildContext context , int index ){
+    String imagePath = '';
+    showModalBottomSheet(context: context,
+        builder: (context){
+          return Container(
+            height: 150.0,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+              ),
+              color: MyColors.myBlue,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                IconButton(
+                  onPressed: () async{
+                    imagePath = await _pickImage(ImageSource.camera);
+                    index == 1 ? imagePath1 = imagePath : imagePath2 = imagePath;
+                    log(imagePath);
+                    setState(() {
+                    });
+                    // ignore: use_build_context_synchronously
+                    Navigator.pop(context);
+                  },
+                  icon: Container(
+                    padding: const EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: const Icon(
+                      Icons.camera_alt_outlined,
+                      size: 50.0,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: ()async{
+                    imagePath = await _pickImage(ImageSource.gallery);
+                    index == 1 ? imagePath1 = imagePath : imagePath2 = imagePath;
+                    log(imagePath);
+                    setState(() {
+                    });
+                    // ignore: use_build_context_synchronously
+                    Navigator.pop(context);
+                  },
+                  icon: Container(
+                    padding: const EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: const Icon(
+                      Icons.photo,
+                      size: 50.0,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+    );
+  }
   @override
   Widget build(BuildContext context) {
     AppLocale.of(context).loadLang();
@@ -25,7 +114,6 @@ class ApplyRequestScreen extends StatelessWidget {
     TextEditingController phoneController = TextEditingController();
     TextEditingController descriptionController = TextEditingController();
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    String imagePath1 = '', imagePath2 = '';
     return BlocProvider(
       create: (context) =>
           RequestBloc(requestRepository: FirebaseRequestRepository()),
@@ -141,29 +229,18 @@ class ApplyRequestScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            CameraComponent(
+                            if (imagePath1.isEmpty) CameraComponent(
                                 text: getLang(context, 'id face')!,
-                                onTap: () async {
-                                  var imagePicker = ImagePicker();
-                                  var pickedImage = await imagePicker.pickImage(
-                                    source: ImageSource.camera,
-                                  );
-                                  if (pickedImage != null) {
-                                    imagePath1 = pickedImage.path;
-                                  }
-                                }),
+                                onTap: () {
+                                  showBottomSheet(context, 1);
+                                }) else ShowImageFile(file: File(imagePath1)),
+                            imagePath2.isEmpty ?
                             CameraComponent(
                               text: getLang(context, 'id tail')!,
-                              onTap: () async {
-                                var imagePicker = ImagePicker();
-                                var pickedImage = await imagePicker.pickImage(
-                                  source: ImageSource.camera,
-                                );
-                                if (pickedImage != null) {
-                                  imagePath2 = pickedImage.path;
-                                }
+                              onTap: () {
+                                showBottomSheet(context, 2);
                               },
-                            ),
+                            ):ShowImageFile(file: File(imagePath2)),
                           ],
                         ),
                         const SizedBox(

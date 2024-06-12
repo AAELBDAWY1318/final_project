@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:case_campaign_repository/case_campaign_repository.dart';
 import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/blocs/cases_campaigns_bloc/cases_campaigns_bloc.dart';
@@ -9,13 +11,96 @@ import 'package:charity/widgets/default_text_form_field.dart';
 import 'package:charity/widgets/failure_dialog.dart';
 import 'package:charity/widgets/loading_dialog.dart';
 import 'package:charity/widgets/second_default_text.dart';
+import 'package:charity/widgets/show_image_file.dart';
 import 'package:charity/widgets/success_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddCampaignScreen extends StatelessWidget {
+class AddCampaignScreen extends StatefulWidget {
   const AddCampaignScreen({super.key});
+
+  @override
+  State<AddCampaignScreen> createState() => _AddCampaignScreenState();
+}
+class _AddCampaignScreenState extends State<AddCampaignScreen> {
+  String image = '';
+  Future<String> _pickImage(ImageSource source) async {
+    String imagePath = '';
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: source);
+    setState(() {
+      if (pickedFile != null) {
+        imagePath = pickedFile.path;
+      }
+    });
+    return imagePath;
+  }
+
+  void showBottomSheet(BuildContext context){
+    String imagePath = '';
+    showModalBottomSheet(context: context,
+        builder: (context){
+          return Container(
+            height: 150.0,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+              ),
+              color: MyColors.myBlue,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                IconButton(
+                  onPressed: () async{
+                    imagePath = await _pickImage(ImageSource.camera);
+                    image = imagePath;
+                    setState(() {
+                    });
+                    // ignore: use_build_context_synchronously
+                    Navigator.pop(context);
+                  },
+                  icon: Container(
+                    padding: const EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: const Icon(
+                      Icons.camera_alt_outlined,
+                      size: 50.0,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: ()async{
+                    imagePath = await _pickImage(ImageSource.gallery);
+                    image = imagePath;
+                    setState(() {
+                    });
+                    // ignore: use_build_context_synchronously
+                    Navigator.pop(context);
+                  },
+                  icon: Container(
+                    padding: const EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: const Icon(
+                      Icons.photo,
+                      size: 50.0,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,15 +175,14 @@ class AddCampaignScreen extends StatelessWidget {
                           height: 10.0,
                         ),
                         Center(
-                          child: CameraComponent(
+                          child: image.isEmpty?
+                          CameraComponent(
                             text: getLang(context, "sImage")!,
-                            onTap: () async {
-                              var imagePicker = ImagePicker();
-                              pickedImage = await imagePicker.pickImage(
-                                source: ImageSource.gallery,
-                              );
+                            onTap: () {
+                              showBottomSheet(context);
                             },
-                          ),
+                          ) :
+                              ShowImageFile(file: File(image)),
                         ),
                         const SizedBox(
                           height: 20.0,
@@ -155,11 +239,11 @@ class AddCampaignScreen extends StatelessWidget {
                           buttonColor: MyColors.myBlue,
                           function: () {
                             if (formKey.currentState!.validate()) {
-                              if (pickedImage != null) {
+                              if (image.isNotEmpty) {
                                 CampaignModel campaignModel = CampaignModel(
                                     title: titleController.text,
                                     description: descriptionController.text,
-                                    photo: pickedImage!.path,
+                                    photo: image,
                                     allAmount: moneyController.text,
                                     collectedAmount: '0.0');
                                 context.read<CasesCampaignsBloc>().add(

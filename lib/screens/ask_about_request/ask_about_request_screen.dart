@@ -1,6 +1,7 @@
 import 'package:charity/app_locale/app_locale.dart';
 import 'package:charity/blocs/request_bloc/request_bloc.dart';
 import 'package:charity/constant/my_colors.dart';
+import 'package:charity/widgets/back_compoent.dart';
 import 'package:charity/widgets/default_material_button.dart';
 import 'package:charity/widgets/default_text_form_field.dart';
 import 'package:charity/widgets/failure_dialog.dart';
@@ -73,48 +74,57 @@ class AskAboutRequestScreen extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          return Scaffold(
-            backgroundColor: Colors.white,
-            body: SingleChildScrollView(
-              child: Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    const UpperComponent(),
-                    FirstDefaultText(
-                        text: getLang(context, "ask about request")!),
-                    const SizedBox(
-                      height: 20.0,
+          return SafeArea(
+            child: Scaffold(
+              backgroundColor: Colors.white,
+              body: Stack(
+                children: [
+                  SingleChildScrollView(
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          const UpperComponent(),
+                          FirstDefaultText(
+                              text: getLang(context, "ask about request")!),
+                          const SizedBox(
+                            height: 20.0,
+                          ),
+                          DefaultTextFormField(
+                            label: getLang(context, 'id')!,
+                            icon: Icons.credit_card_outlined,
+                            controller: idController,
+                            validator: (String? val) {
+                              if (val!.length < 14) {
+                                return getLang(context, "id length")!;
+                              }
+                              return null;
+                            },
+                            keyboardType: TextInputType.number,
+                          ),
+                          const SizedBox(
+                            height: 10.0,
+                          ),
+                          DefaultMaterialButton(
+                            buttonColor: MyColors.myBlue,
+                            textColor: Colors.white,
+                            text: getLang(context, "Continue")!,
+                            function: () {
+                              if (formKey.currentState!.validate()) {
+                                context.read<RequestBloc>().add(
+                                  AskAboutRequest(nationalId: idController.text),
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                    DefaultTextFormField(
-                      label: getLang(context, 'id')!,
-                      icon: Icons.credit_card_outlined,
-                      controller: idController,
-                      validator: (String? val) {
-                        if (val!.length < 14) {
-                          return getLang(context, "id length")!;
-                        }
-                        return null;
-                      },
-                      keyboardType: TextInputType.number,
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    DefaultMaterialButton(
-                      buttonColor: MyColors.myBlue,
-                      textColor: Colors.white,
-                      text: getLang(context, "Continue")!,
-                      function: () {
-                        if (formKey.currentState!.validate()) {
-                          context.read<RequestBloc>().add(
-                                AskAboutRequest(nationalId: idController.text),
-                              );
-                        }
-                      },
-                    ),
-                  ],
-                ),
+                  ),
+                  const Back(
+                    color: Colors.white,
+                  ),
+                ],
               ),
             ),
           );
