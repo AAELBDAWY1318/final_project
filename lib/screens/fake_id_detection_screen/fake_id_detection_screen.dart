@@ -1,7 +1,20 @@
-import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
+
+import 'package:charity/app_locale/app_locale.dart';
+import 'package:charity/blocs/ml_bloc/ml_bloc.dart';
+import 'package:charity/constant/my_colors.dart';
+import 'package:charity/ml_model/ml_model.dart';
+import 'package:charity/widgets/animated_text.dart';
+import 'package:charity/widgets/back_compoent.dart';
+import 'package:charity/widgets/camera_component.dart';
+import 'package:charity/widgets/default_material_button.dart';
+import 'package:charity/widgets/failure_dialog.dart';
+import 'package:charity/widgets/loading_dialog.dart';
+import 'package:charity/widgets/second_default_text.dart';
+import 'package:charity/widgets/show_image_file.dart';
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class FakeIdDetection extends StatefulWidget {
@@ -12,93 +25,249 @@ class FakeIdDetection extends StatefulWidget {
 }
 
 class _FakeIdDetectionState extends State<FakeIdDetection> {
-  File? _imageFile;
-  String _prediction = '';
+  String imagePath = '';
+  late String prediction;
 
-  // Function to select an image from gallery or camera
-  Future<void> _pickImage(ImageSource source) async {
+  bool flag = false;
+
+  Future<String> _pickImage(ImageSource source) async {
+    String imagePath = '';
     final picker = ImagePicker();
-    final pickedFile = await picker.getImage(source: source);
+    final pickedFile = await picker.pickImage(source: source);
     setState(() {
       if (pickedFile != null) {
-        _imageFile = File(pickedFile.path);
-      } else {
-        print('No image selected.');
+        imagePath = pickedFile.path;
       }
     });
+    return imagePath;
   }
 
-  // Function to upload image and get prediction from Flask backend
-  Future<void> _uploadImage() async {
-    if (_imageFile == null) return;
-
-    // API endpoint URL
-    final url = 'http://127.0.0.1:5000/predict';
-
-    try {
-      // Create Dio instance
-      Dio dio = Dio();
-
-      // Create FormData
-      FormData formData = FormData.fromMap({
-        'file': await MultipartFile.fromFile(_imageFile!.path, filename: 'image.jpg'),
-      });
-
-      // Send POST request
-      var response = await dio.post(
-        url,
-        data: formData,
-        options: Options(
-          contentType: 'multipart/form-data',
-        ),
-      );
-
-      // Handle response
-      if (response.statusCode == 200) {
-        // Decode and display the prediction from Flask server
-        var jsonResponse = json.decode(response.data); // Decode JSON response
-        var prediction = jsonResponse['prediction'];
-        setState(() {
-          _prediction = 'Prediction: $prediction';
+  void showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            height: 150.0,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+              ),
+              color: MyColors.myBlue,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                IconButton(
+                  onPressed: () async {
+                    imagePath = await _pickImage(ImageSource.camera);
+                    log(imagePath);
+                    setState(() {});
+                    // ignore: use_build_context_synchronously
+                    Navigator.pop(context);
+                  },
+                  icon: Container(
+                    padding: const EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: const Icon(
+                      Icons.camera_alt_outlined,
+                      size: 50.0,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () async {
+                    imagePath = await _pickImage(ImageSource.gallery);
+                    log(imagePath);
+                    setState(() {});
+                    // ignore: use_build_context_synchronously
+                    Navigator.pop(context);
+                  },
+                  icon: Container(
+                    padding: const EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: const Icon(
+                      Icons.photo,
+                      size: 50.0,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
         });
-      } else {
-        print('Failed with status code: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error uploading image: $e');
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Image Classification App'),
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _imageFile == null
-                  ? Text('No image selected.')
-                  : Image.file(_imageFile!),
-              ElevatedButton(
-                onPressed: () => _pickImage(ImageSource.gallery),
-                child: Text('Select Image'),
+    return BlocProvider<MlBloc>(
+      create: (context) => MlBloc(mlLogic: MLLogic()),
+      child: BlocConsumer<MlBloc, MlState>(
+        listener: (context, state) {
+          if (state is IDDetectionProcessing) {
+            showDialog(
+                context: context, builder: (context) => const LoadingDialog());
+          } else if (state is IDDetectionFailure) {
+            Navigator.pop(context);
+            showDialog(
+                context: context,
+                builder: (context) => FailureDialog(onPressed: () {
+                      Navigator.pop(context);
+                    }));
+          } else if (state is IDDetectionSuccess) {
+            int x = state.prediction;
+            if (x == 0) {
+              prediction = getLang(context, "f")!;
+              flag = false;
+            } else {
+              prediction =getLang(context, "r")!;
+              flag = true;
+            }
+            Navigator.pop(context);
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    content: SizedBox(
+                      height: 200.0,
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            'assets/images/ai.png',
+                            height: 100.0,
+                          ),
+                          const SizedBox(height: 10.0,),
+                          AnimatedTextWriter(
+                            text: prediction,
+                            onTextWritingDone: (flag){},
+                            color: flag == true ? Colors.green : Colors.red,
+                          ),
+                        ],
+                      ),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          setState(() {
+                            imagePath = '';
+                          });
+                        },
+                        child:
+                        Text(getLang(context, "OK")!),
+                      ),
+                    ],
+                  );
+                });
+          }
+        },
+        builder: (context, state) {
+          return SafeArea(
+            child: Scaffold(
+              backgroundColor: Colors.white,
+              body: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 40.0,
+                            ),
+                            SecondDefaultText(
+                              text: getLang(context, "test")!,
+                            ),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            imagePath.isEmpty
+                                ? Center(
+                                    child: CameraComponent(
+                                      text: getLang(context, "image")!,
+                                      onTap: () {
+                                        showBottomSheet(context);
+                                      },
+                                    ),
+                                  )
+                                : Center(
+                                    child:
+                                        ShowImageFile(file: File(imagePath))),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            DefaultMaterialButton(
+                              text: getLang(context, "Continue")!,
+                              textColor: Colors.white,
+                              buttonColor: MyColors.myBlue,
+                              function: () {
+                                if (imagePath.isNotEmpty) {
+                                  context.read<MlBloc>().add(
+                                        DetectFakeIdEvent(
+                                          imageFile: File(imagePath),
+                                        ),
+                                      );
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content: Text(getLang(
+                                              context, "select image")!),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child:
+                                                  Text(getLang(context, "OK")!),
+                                            ),
+                                          ],
+                                        );
+                                      });
+                                }
+                              },
+                            ),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            Center(
+                              child: Container(
+                                height: 250.0,
+                                padding: const EdgeInsets.all(20.0),
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [MyColors.myBlue , Colors.white],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                  ),
+                                  borderRadius: BorderRadius.circular(50.0),
+                                ),
+                                child: Image.asset(
+                                  'assets/images/ai.png',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Back(),
+                ],
               ),
-              ElevatedButton(
-                onPressed: () => _pickImage(ImageSource.camera),
-                child: Text('Take Photo'),
-              ),
-              ElevatedButton(
-                onPressed: _uploadImage,
-                child: Text('Classify Image'),
-              ),
-              Text(_prediction),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

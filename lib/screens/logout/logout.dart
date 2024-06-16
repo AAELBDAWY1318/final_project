@@ -1,4 +1,5 @@
 import 'package:charity/widgets/back_compoent.dart';
+import 'package:charity/widgets/loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:charity/app_locale/app_locale.dart';
@@ -28,6 +29,7 @@ class Logout extends StatelessWidget {
         listener: (context, state) {
           if (state is SignOutSuccess) {
             // Navigate to the login screen
+            Navigator.pop(context);
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const LoginScreen()),
@@ -51,17 +53,12 @@ class Logout extends StatelessWidget {
                 );
               },
             );
-          } else {
+          } else if (state is SignOutSuccess){
             // Show loading dialog
             showDialog(
               context: context,
-              barrierDismissible: false,
               builder: (BuildContext context) {
-                return const Dialog(
-                  child: Padding(
-                      padding: EdgeInsets.all(20.0),
-                      child: CircularProgressIndicator()),
-                );
+                return const LoadingDialog();
               },
             );
           }

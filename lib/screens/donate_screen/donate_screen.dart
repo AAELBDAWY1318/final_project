@@ -17,6 +17,11 @@ class DonateScreen extends StatelessWidget {
   final String category, caseId;
   const DonateScreen({super.key, this.category = '', this.caseId = '-'});
 
+  bool _isValidEgyptianPhoneNumber(String phone) {
+    final RegExp regex = RegExp(r'^(010|011|012|015)[0-9]{8}$');
+    return regex.hasMatch(phone);
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig sizeConfig = SizeConfig()..init(context);
@@ -187,12 +192,12 @@ class DonateScreen extends StatelessWidget {
                         if (val!.isEmpty) {
                           return getLang(
                               context, "This field must be assigned");
-                        } else if (val.length < 11) {
-                          return getLang(context, "invalid phone");
+                        } else if (!_isValidEgyptianPhoneNumber(val)){
+                          return getLang(context, "phone number")!;
                         }
                         return null;
                       },
-                      keyboardType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.number,
                     ),
                     const SizedBox(
                       height: 15.0,

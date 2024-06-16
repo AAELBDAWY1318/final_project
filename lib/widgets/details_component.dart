@@ -22,6 +22,8 @@ class DetailsCom extends StatelessWidget {
             fontSize: 18.0,
             color: Colors.black45,
           ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
       ],
     );
