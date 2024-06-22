@@ -58,5 +58,16 @@ class PaymentDonationsBloc
         emit(GetDonationsFailure());
       }
     });
+    on<GetChartDataEvent>((event, emit)async{
+      try{
+        emit(GetChartsDataProcess());
+        Map<String , double> data = await donationRepository.getDataCharts();
+        emit(GetChartsDataSuccess(data: data));
+
+      }catch(e){
+        log(e.toString());
+        emit(GetChartsDataFailure());
+      }
+    });
   }
 }

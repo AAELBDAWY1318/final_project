@@ -25,4 +25,6 @@ class SetDonationReport extends PaymentDonationsEvent{
   const SetDonationReport({required this.donationModel});
 }
 
+class GetChartDataEvent extends PaymentDonationsEvent {}
+
 class GetDonationsEvent extends PaymentDonationsEvent{}

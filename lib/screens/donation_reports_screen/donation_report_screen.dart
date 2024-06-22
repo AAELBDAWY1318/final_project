@@ -5,6 +5,7 @@ import 'package:charity/size.dart';
 import 'package:charity/widgets/animated_loading.dart';
 import 'package:charity/widgets/back_compoent.dart';
 import 'package:charity/widgets/report_component.dart';
+import 'package:charity/widgets/second_default_text.dart';
 import 'package:donation_repository/donation_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,10 +26,14 @@ class DonationReportsScreen extends StatelessWidget {
           backgroundColor: Colors.white,
           body: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Back(),
-                const SizedBox(
-                  height: 10.0,
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: SecondDefaultText(
+                    text:getLang(context , "my donation reports")!,
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(

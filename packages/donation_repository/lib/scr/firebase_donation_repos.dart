@@ -84,4 +84,51 @@ class FirebaseDonationRepository implements DonationRepository {
     }
     return list;
   }
+
+  @override
+  Future<Map<String, double>> getDataCharts() async{
+    Map<String, double> data = {
+      "campaigns": 0.0,
+      "All" : 0.0,
+      "Students":0.0,
+      "Poor":0.0 ,
+      "Windows": 0.0,
+      "Debtors":0.0,
+      "amount":0.0,
+    };
+    try{
+      await donationCollection.get().then((value) {
+        value.docs.forEach((element) {
+          if (element.data() != null) {
+            DonationEntity entity = DonationEntity.fromDocument(
+              element.data() as Map<String, dynamic>,
+            );
+            DonationModel model = DonationModel.fromEntity(entity);
+            if(model.category == "campaigns"){
+              data["campaigns"] = data["campaigns"]! + double.parse(model.donationAmount);
+              data["amount"] = data["amount"]! + double.parse(model.donationAmount);
+            }else if(model.category == "All"){
+              data["All"] = data["All"]! + double.parse(model.donationAmount);
+              data["amount"] = data["amount"]! + double.parse(model.donationAmount);
+            }else if(model.category == "Students"){
+              data["Students"] = data["Students"]! + double.parse(model.donationAmount);
+              data["amount"] = data["amount"]! + double.parse(model.donationAmount);
+            }else if(model.category == "Poor"){
+              data["Poor"] = data["Poor"]! + double.parse(model.donationAmount);
+              data["amount"] = data["amount"]! + double.parse(model.donationAmount);
+            }else if(model.category == "Windows"){
+              data["Windows"] = data["Windows"]! + double.parse(model.donationAmount);
+              data["amount"] = data["amount"]! + double.parse(model.donationAmount);
+            }else if(model.category == "Debtors"){
+              data["Debtors"] = data["Debtors"]! + double.parse(model.donationAmount);
+              data["amount"] = data["amount"]! + double.parse(model.donationAmount);
+            }
+          }
+        });
+      });
+    }catch(e){
+      log(e.toString());
+    }
+    return data;
+  }
 }

@@ -32,3 +32,11 @@ class GetDonationsSuccess extends PaymentDonationsState{
   const GetDonationsSuccess({required this.list});
 }
 
+class GetChartsDataProcess extends PaymentDonationsState{}
+class GetChartsDataFailure extends PaymentDonationsState{}
+class GetChartsDataSuccess extends PaymentDonationsState{
+  final Map<String , double> data;
+
+  const GetChartsDataSuccess({required this.data});
+
+}

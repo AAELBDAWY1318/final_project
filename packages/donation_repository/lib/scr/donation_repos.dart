@@ -5,4 +5,6 @@ abstract class DonationRepository{
   Future<void> setDonation(DonationModel donationModel);
 
   Future<List<DonationModel>> getDonationReports();
+
+  Future<Map<String , double>> getDataCharts();
 }

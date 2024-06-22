@@ -24,7 +24,7 @@ Future<void> main() async {
     options: kIsWeb || Platform.isAndroid
         ? const FirebaseOptions(
       apiKey: "AIzaSyA17IeuxOBHRalXD7apwayyAuXUAQZquOw",
-      appId: "AIzaSyA17IeuxOBHRalXD7apwayyAuXUAQZquOw",
+      appId:  "1:555327982230:android:a4c9f284eb4aacdd61d0b7",
       messagingSenderId: "555327982230",
       projectId: "charity-3385e",
     ): null,
